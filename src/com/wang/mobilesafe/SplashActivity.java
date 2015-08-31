@@ -119,6 +119,8 @@ public class SplashActivity extends Activity {
 		@Override
 		public void run() {
 			
+			long startTime = System.currentTimeMillis();
+			
 			//obtain()返回一个已存在的Message，提高效率
 			Message msg = Message.obtain();
 			
@@ -152,6 +154,18 @@ public class SplashActivity extends Activity {
 				msg.what = NETWORK_ERROR;
 				e.printStackTrace();
 			} finally {
+				
+				long endTime = System.currentTimeMillis();
+				long dTime = endTime - startTime;
+				
+				//使splash页面停够2秒钟
+				if( dTime < 2000 ){
+					try {
+						Thread.sleep(2000-dTime);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 				handler.sendMessage(msg);
 			}
 		}
