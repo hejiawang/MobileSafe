@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,6 +86,12 @@ public class SplashActivity extends Activity {
         
         //链接服务器检查服务更新
         new Thread(new CheckVersionTask()).start();
+
+        //splash页面淡出 2秒钟
+        AlphaAnimation aa = new AlphaAnimation(0.2f, 1.0f);
+        aa.setDuration(2000);
+        findViewById(R.id.rl_splash).startAnimation(aa);
+        
     }
     
     /**
