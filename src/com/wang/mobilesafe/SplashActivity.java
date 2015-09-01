@@ -247,7 +247,9 @@ public class SplashActivity extends Activity {
 				HttpURLConnection conn = (HttpURLConnection) url
 						.openConnection();
 				conn.setRequestMethod("GET");
-				conn.setConnectTimeout(5000);
+				//conn.setConnectTimeout(5000);
+				//为了测试速度，时间少点
+				conn.setConnectTimeout(1500);
 
 				int code = conn.getResponseCode();
 				if (code == 200) {

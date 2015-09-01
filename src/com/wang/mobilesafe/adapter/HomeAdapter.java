@@ -1,0 +1,63 @@
+package com.wang.mobilesafe.adapter;
+
+import com.wang.mobilesafe.R;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class HomeAdapter extends BaseAdapter {
+
+	private static final String[] names = { "手机防盗", "通讯卫士", "软件管理", "进程管理",
+			"流量统计", "病毒查杀", "系统优化", "高级管理", "设置中心" };
+	private static final int[] icons = { R.drawable.safe,
+			R.drawable.callmsgsafe, R.drawable.app, R.drawable.taskmanager,
+			R.drawable.netmanager, R.drawable.trojan, R.drawable.sysoptimize,
+			R.drawable.atools, R.drawable.settings };
+
+	private Context context;
+
+	public HomeAdapter(Context context) {
+		this.context = context;
+	}
+
+	// 返回有多少个条目
+	@Override
+	public int getCount() {
+
+		return names.length;
+	}
+
+	@Override
+	public Object getItem(int arg0) {
+		return null;
+	}
+
+	@Override
+	public long getItemId(int arg0) {
+		return 0;
+	}
+
+	// 返回每一个位置对应的view对象
+	@Override
+	public View getView(int arg0, View arg1, ViewGroup arg2) {
+
+		// TextView tv = new TextView(context);
+		// tv.setText(names[arg0]);
+		// tv.setTextColor(Color.BLACK);
+		// tv.setTextSize(25);
+
+		View view = View.inflate(context, R.layout.grid_home_item, null);
+		TextView tv_name = (TextView) view.findViewById(R.id.tv_home_name);
+		ImageView iv_icon = (ImageView) view.findViewById(R.id.iv_home_icon);
+		tv_name.setText(names[arg0]);
+		iv_icon.setImageResource(icons[arg0]);
+		
+		return view;
+	}
+
+}
