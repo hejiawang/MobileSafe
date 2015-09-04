@@ -52,39 +52,52 @@ containing a value of this type.
     public static final class drawable {
         public static final int app=0x7f020000;
         public static final int atools=0x7f020001;
-        public static final int callmsgsafe=0x7f020002;
-        public static final int home_selector=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int listview_devider=0x7f020005;
-        public static final int netmanager=0x7f020006;
-        public static final int safe=0x7f020007;
-        public static final int settings=0x7f020008;
-        public static final int shenmatran=0x7f020009;
-        public static final int splashbk=0x7f02000a;
-        public static final int sysoptimize=0x7f02000b;
-        public static final int taskmanager=0x7f02000c;
-        public static final int trojan=0x7f02000d;
+        public static final int button_bg_green=0x7f020002;
+        public static final int button_bg_green_on=0x7f020003;
+        public static final int button_bg_selector=0x7f020004;
+        public static final int callmsgsafe=0x7f020005;
+        public static final int home_selector=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int listview_devider=0x7f020008;
+        public static final int netmanager=0x7f020009;
+        public static final int safe=0x7f02000a;
+        public static final int settings=0x7f02000b;
+        public static final int shenmatran=0x7f02000c;
+        public static final int splashbk=0x7f02000d;
+        public static final int sysoptimize=0x7f02000e;
+        public static final int taskmanager=0x7f02000f;
+        public static final int trojan=0x7f020010;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000b;
-        public static final int cb_status=0x7f09000a;
+        public static final int action_settings=0x7f090012;
+        public static final int bt_fiest_entry_cancle=0x7f090009;
+        public static final int bt_fiest_entry_ok=0x7f090008;
+        public static final int bt_normal_entry_cancle=0x7f09000c;
+        public static final int bt_normal_entry_ok=0x7f09000b;
+        public static final int cb_status=0x7f090011;
+        public static final int ed_fiest_entry_pwd=0x7f090006;
+        public static final int ed_fiest_entry_pwd_confirm=0x7f090007;
+        public static final int ed_normal_entry_pwd=0x7f09000a;
         public static final int gv_home=0x7f090000;
-        public static final int iv_home_icon=0x7f090006;
+        public static final int iv_home_icon=0x7f09000d;
         public static final int iv_splash_logo=0x7f090003;
         public static final int rl_splash=0x7f090002;
         public static final int sv_setting_update=0x7f090001;
-        public static final int tv_home_name=0x7f090007;
-        public static final int tv_settingview_content=0x7f090009;
-        public static final int tv_settingview_title=0x7f090008;
+        public static final int tv_home_name=0x7f09000e;
+        public static final int tv_settingview_content=0x7f090010;
+        public static final int tv_settingview_title=0x7f09000f;
         public static final int tv_splash_appname=0x7f090004;
         public static final int tv_splash_version=0x7f090005;
     }
     public static final class layout {
         public static final int activity_home=0x7f030000;
-        public static final int activity_setting=0x7f030001;
-        public static final int activity_splash=0x7f030002;
-        public static final int grid_home_item=0x7f030003;
-        public static final int ui_setting_view=0x7f030004;
+        public static final int activity_lost_find=0x7f030001;
+        public static final int activity_setting=0x7f030002;
+        public static final int activity_splash=0x7f030003;
+        public static final int dialog_first_entry=0x7f030004;
+        public static final int dialog_normal_entry=0x7f030005;
+        public static final int grid_home_item=0x7f030006;
+        public static final int ui_setting_view=0x7f030007;
     }
     public static final class menu {
         public static final int main=0x7f080000;
