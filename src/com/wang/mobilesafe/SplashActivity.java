@@ -18,6 +18,7 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -236,6 +237,23 @@ public class SplashActivity extends Activity {
 		@Override
 		public void run() {
 
+			SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+			boolean isupdate = sp.getBoolean("update", true);
+			
+			//如果关闭自动更新。。。。。
+			if ( !isupdate ) {
+				
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				loadMainUI();
+				return;
+			}
+			
+			
 			long startTime = System.currentTimeMillis();
 
 			// obtain()返回一个已存在的Message，提高效率
