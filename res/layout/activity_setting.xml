@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:mobilesafe="http://schemas.android.com/apk/res/com.wang.mobilesafe"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:background="#355E9E"
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:gravity="center"
+        android:textSize="23dip"
+        android:textColor="#EBC950"
+        android:text="设置中心" />
+    
+    <com.wang.mobilesafe.ui.SettingView 
+        android:id="@+id/sv_setting_update"
+        mobilesafe:title="自动更新设置"
+        mobilesafe:unchecked_text="自动更新没有开启"
+        mobilesafe:checked_text="自动更新已经开启"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        ></com.wang.mobilesafe.ui.SettingView>
+    
+</LinearLayout>

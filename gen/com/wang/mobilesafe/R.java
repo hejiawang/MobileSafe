@@ -9,6 +9,30 @@ package com.wang.mobilesafe;
 
 public final class R {
     public static final class attr {
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int checked_text=0x7f010002;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int title=0x7f010000;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int unchecked_text=0x7f010001;
     }
     public static final class color {
         public static final int gray=0x7f040001;
@@ -31,29 +55,36 @@ public final class R {
         public static final int callmsgsafe=0x7f020002;
         public static final int home_selector=0x7f020003;
         public static final int ic_launcher=0x7f020004;
-        public static final int netmanager=0x7f020005;
-        public static final int safe=0x7f020006;
-        public static final int settings=0x7f020007;
-        public static final int shenmatran=0x7f020008;
-        public static final int splashbk=0x7f020009;
-        public static final int sysoptimize=0x7f02000a;
-        public static final int taskmanager=0x7f02000b;
-        public static final int trojan=0x7f02000c;
+        public static final int listview_devider=0x7f020005;
+        public static final int netmanager=0x7f020006;
+        public static final int safe=0x7f020007;
+        public static final int settings=0x7f020008;
+        public static final int shenmatran=0x7f020009;
+        public static final int splashbk=0x7f02000a;
+        public static final int sysoptimize=0x7f02000b;
+        public static final int taskmanager=0x7f02000c;
+        public static final int trojan=0x7f02000d;
     }
     public static final class id {
-        public static final int action_settings=0x7f090007;
+        public static final int action_settings=0x7f09000b;
+        public static final int cb_status=0x7f09000a;
         public static final int gv_home=0x7f090000;
-        public static final int iv_home_icon=0x7f090005;
-        public static final int iv_splash_logo=0x7f090002;
-        public static final int rl_splash=0x7f090001;
-        public static final int tv_home_name=0x7f090006;
-        public static final int tv_splash_appname=0x7f090003;
-        public static final int tv_splash_version=0x7f090004;
+        public static final int iv_home_icon=0x7f090006;
+        public static final int iv_splash_logo=0x7f090003;
+        public static final int rl_splash=0x7f090002;
+        public static final int sv_setting_update=0x7f090001;
+        public static final int tv_home_name=0x7f090007;
+        public static final int tv_settingview_content=0x7f090009;
+        public static final int tv_settingview_title=0x7f090008;
+        public static final int tv_splash_appname=0x7f090004;
+        public static final int tv_splash_version=0x7f090005;
     }
     public static final class layout {
         public static final int activity_home=0x7f030000;
-        public static final int activity_splash=0x7f030001;
-        public static final int grid_home_item=0x7f030002;
+        public static final int activity_setting=0x7f030001;
+        public static final int activity_splash=0x7f030002;
+        public static final int grid_home_item=0x7f030003;
+        public static final int ui_setting_view=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -91,4 +122,65 @@ public final class R {
          */
         public static final int AppTheme=0x7f070001;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a setting_view_style.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #setting_view_style_checked_text com.wang.mobilesafe:checked_text}</code></td><td></td></tr>
+           <tr><td><code>{@link #setting_view_style_title com.wang.mobilesafe:title}</code></td><td></td></tr>
+           <tr><td><code>{@link #setting_view_style_unchecked_text com.wang.mobilesafe:unchecked_text}</code></td><td></td></tr>
+           </table>
+           @see #setting_view_style_checked_text
+           @see #setting_view_style_title
+           @see #setting_view_style_unchecked_text
+         */
+        public static final int[] setting_view_style = {
+            0x7f010000, 0x7f010001, 0x7f010002
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.wang.mobilesafe.R.attr#checked_text}
+          attribute's value can be found in the {@link #setting_view_style} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.wang.mobilesafe:checked_text
+        */
+        public static final int setting_view_style_checked_text = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.wang.mobilesafe.R.attr#title}
+          attribute's value can be found in the {@link #setting_view_style} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.wang.mobilesafe:title
+        */
+        public static final int setting_view_style_title = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.wang.mobilesafe.R.attr#unchecked_text}
+          attribute's value can be found in the {@link #setting_view_style} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.wang.mobilesafe:unchecked_text
+        */
+        public static final int setting_view_style_unchecked_text = 1;
+    };
 }
