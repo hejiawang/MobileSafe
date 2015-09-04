@@ -60,16 +60,16 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020007;
         public static final int listview_devider=0x7f020008;
         public static final int netmanager=0x7f020009;
-        public static final int safe=0x7f02000a;
-        public static final int settings=0x7f02000b;
-        public static final int shenmatran=0x7f02000c;
-        public static final int splashbk=0x7f02000d;
-        public static final int sysoptimize=0x7f02000e;
-        public static final int taskmanager=0x7f02000f;
-        public static final int trojan=0x7f020010;
+        public static final int notification=0x7f02000a;
+        public static final int safe=0x7f02000b;
+        public static final int settings=0x7f02000c;
+        public static final int shenmatran=0x7f02000d;
+        public static final int splashbk=0x7f02000e;
+        public static final int sysoptimize=0x7f02000f;
+        public static final int taskmanager=0x7f020010;
+        public static final int trojan=0x7f020011;
     }
     public static final class id {
-        public static final int action_settings=0x7f090012;
         public static final int bt_fiest_entry_cancle=0x7f090009;
         public static final int bt_fiest_entry_ok=0x7f090008;
         public static final int bt_normal_entry_cancle=0x7f09000c;
@@ -79,6 +79,7 @@ containing a value of this type.
         public static final int ed_fiest_entry_pwd_confirm=0x7f090007;
         public static final int ed_normal_entry_pwd=0x7f09000a;
         public static final int gv_home=0x7f090000;
+        public static final int item_change_name=0x7f090012;
         public static final int iv_home_icon=0x7f09000d;
         public static final int iv_splash_logo=0x7f090003;
         public static final int rl_splash=0x7f090002;
@@ -100,7 +101,7 @@ containing a value of this type.
         public static final int ui_setting_view=0x7f030007;
     }
     public static final class menu {
-        public static final int main=0x7f080000;
+        public static final int lost_find_menu=0x7f080000;
     }
     public static final class string {
         public static final int action_settings=0x7f050002;

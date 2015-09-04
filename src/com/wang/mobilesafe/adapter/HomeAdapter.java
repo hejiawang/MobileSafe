@@ -3,7 +3,9 @@ package com.wang.mobilesafe.adapter;
 import com.wang.mobilesafe.R;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -44,7 +46,7 @@ public class HomeAdapter extends BaseAdapter {
 
 	// 返回每一个位置对应的view对象
 	@Override
-	public View getView(int arg0, View arg1, ViewGroup arg2) {
+	public View getView(int position, View arg1, ViewGroup arg2) {
 
 		// TextView tv = new TextView(context);
 		// tv.setText(names[arg0]);
@@ -54,8 +56,19 @@ public class HomeAdapter extends BaseAdapter {
 		View view = View.inflate(context, R.layout.grid_home_item, null);
 		TextView tv_name = (TextView) view.findViewById(R.id.tv_home_name);
 		ImageView iv_icon = (ImageView) view.findViewById(R.id.iv_home_icon);
-		tv_name.setText(names[arg0]);
-		iv_icon.setImageResource(icons[arg0]);
+		tv_name.setText(names[position]);
+		iv_icon.setImageResource(icons[position]);
+		
+		//显示伪名称
+		if ( position == 0 ) {
+			
+			SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+			String newname = sp.getString("newname", "");
+			
+			if ( !TextUtils.isEmpty(newname) ) {
+				tv_name.setText(newname);
+			}
+		}
 		
 		return view;
 	}
