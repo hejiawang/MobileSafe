@@ -52,22 +52,29 @@ containing a value of this type.
     public static final class drawable {
         public static final int app=0x7f020000;
         public static final int atools=0x7f020001;
-        public static final int button_bg_green=0x7f020002;
-        public static final int button_bg_green_on=0x7f020003;
-        public static final int button_bg_selector=0x7f020004;
-        public static final int callmsgsafe=0x7f020005;
-        public static final int home_selector=0x7f020006;
-        public static final int ic_launcher=0x7f020007;
-        public static final int listview_devider=0x7f020008;
-        public static final int netmanager=0x7f020009;
-        public static final int notification=0x7f02000a;
-        public static final int safe=0x7f02000b;
-        public static final int settings=0x7f02000c;
-        public static final int shenmatran=0x7f02000d;
-        public static final int splashbk=0x7f02000e;
-        public static final int sysoptimize=0x7f02000f;
-        public static final int taskmanager=0x7f020010;
-        public static final int trojan=0x7f020011;
+        public static final int bind=0x7f020002;
+        public static final int button_bg_green=0x7f020003;
+        public static final int button_bg_green_on=0x7f020004;
+        public static final int button_bg_selector=0x7f020005;
+        public static final int callmsgsafe=0x7f020006;
+        public static final int home_selector=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int listview_devider=0x7f020009;
+        public static final int lock=0x7f02000a;
+        public static final int netmanager=0x7f02000b;
+        public static final int next=0x7f02000c;
+        public static final int notification=0x7f02000d;
+        public static final int phone=0x7f02000e;
+        public static final int previous=0x7f02000f;
+        public static final int safe=0x7f020010;
+        public static final int settings=0x7f020011;
+        public static final int setup1=0x7f020012;
+        public static final int shenmatran=0x7f020013;
+        public static final int splashbk=0x7f020014;
+        public static final int sysoptimize=0x7f020015;
+        public static final int taskmanager=0x7f020016;
+        public static final int trojan=0x7f020017;
+        public static final int unlock=0x7f020018;
     }
     public static final class id {
         public static final int bt_fiest_entry_cancle=0x7f090009;
@@ -94,11 +101,15 @@ containing a value of this type.
         public static final int activity_home=0x7f030000;
         public static final int activity_lost_find=0x7f030001;
         public static final int activity_setting=0x7f030002;
-        public static final int activity_splash=0x7f030003;
-        public static final int dialog_first_entry=0x7f030004;
-        public static final int dialog_normal_entry=0x7f030005;
-        public static final int grid_home_item=0x7f030006;
-        public static final int ui_setting_view=0x7f030007;
+        public static final int activity_setup1=0x7f030003;
+        public static final int activity_setup2=0x7f030004;
+        public static final int activity_setup3=0x7f030005;
+        public static final int activity_setup4=0x7f030006;
+        public static final int activity_splash=0x7f030007;
+        public static final int dialog_first_entry=0x7f030008;
+        public static final int dialog_normal_entry=0x7f030009;
+        public static final int grid_home_item=0x7f03000a;
+        public static final int ui_setting_view=0x7f03000b;
     }
     public static final class menu {
         public static final int lost_find_menu=0x7f080000;
@@ -110,15 +121,6 @@ containing a value of this type.
     }
     public static final class style {
         /** 
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    
-
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        
-
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
     
@@ -130,11 +132,14 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
-        /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
-         */
-        public static final int AppTheme=0x7f070001;
+        public static final int AppBaseTheme=0x7f070007;
+        public static final int button_next_style=0x7f070005;
+        public static final int button_pre_style=0x7f070006;
+        public static final int image_off_style=0x7f070004;
+        public static final int image_on_style=0x7f070003;
+        public static final int image_star_style=0x7f070002;
+        public static final int text_content_style=0x7f070001;
+        public static final int text_title_style=0x7f070000;
     }
     public static final class styleable {
         /** Attributes that can be used with a setting_view_style.

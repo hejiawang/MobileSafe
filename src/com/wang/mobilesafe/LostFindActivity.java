@@ -1,10 +1,12 @@
 package com.wang.mobilesafe;
 
+import android.R.bool;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -23,6 +25,14 @@ public class LostFindActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		sp = getSharedPreferences("config", MODE_PRIVATE);
 		setContentView(R.layout.activity_lost_find);
+		
+		//判断用户是否进行过设置向导
+		if ( !isSetup() ) {
+			//进入设置向导
+			Intent intent = new Intent(this,Setup1Activity.class);
+			startActivity(intent);
+			finish();
+		}
 	}
 
 	@Override
@@ -61,5 +71,14 @@ public class LostFindActivity extends Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	/**
+	 * 判断用户是否设置过设置向导
+	 * @return
+	 */
+	private boolean isSetup(){
+		
+		return sp.getBoolean("setup", false);
 	}
 }
