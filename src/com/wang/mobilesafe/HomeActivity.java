@@ -1,6 +1,7 @@
 package com.wang.mobilesafe;
 
 import com.wang.mobilesafe.adapter.HomeAdapter;
+import com.wang.mobilesafe.utils.MD5Util;
 
 import android.R.bool;
 import android.app.Activity;
@@ -158,7 +159,7 @@ public class HomeActivity extends Activity implements OnClickListener {
 			}
 			
 			Editor editor = sd.edit();
-			editor.putString("pwd", pwd);
+			editor.putString("pwd", MD5Util.encode(pwd));
 			editor.commit();
 			dialog.dismiss();
 			break;
@@ -175,7 +176,7 @@ public class HomeActivity extends Activity implements OnClickListener {
 			
 			String saved_pwd = sd.getString("pwd", "");
 			
-			if ( enter_pwd.equals(saved_pwd) ) {
+			if ( MD5Util.encode(enter_pwd).equals(saved_pwd) ) {
 				Intent intent = new Intent(this, LostFindActivity.class);
 				startActivity(intent);
 				dialog.dismiss();
