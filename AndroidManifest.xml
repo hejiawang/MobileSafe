@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- 访问SD卡权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- 监听电话权限 -->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
     
     <application
         android:allowBackup="true"
@@ -31,6 +33,14 @@
         <activity android:name=".HomeActivity"></activity>
         <activity android:name=".SettingActivity"></activity>
         <activity android:name=".LostFindActivity"></activity>
+        
+        
+        
+        <receiver android:name=".receiver.OutCallReceiver">
+            <intent-filter android:priority="1000">
+            	<action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
