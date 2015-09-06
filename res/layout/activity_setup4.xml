@@ -14,6 +14,7 @@
         android:text="强雷建议您开启防盗保护" />
 
     <CheckBox
+        android:id="@+id/cb_setup4_satus"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="防盗保护未开启" />
