@@ -19,12 +19,14 @@ public class Setup2Activity extends BaseSetupActivity {
 	public void showNext() {
 		
 		ActivityUtil.startActivityAndFinish(this, Setup3Activity.class);
+		overridePendingTransition(R.anim.tran_next_in, R.anim.tran_next_out);
 	}
 
 	@Override
 	public void showPre() {
 		
 		ActivityUtil.startActivityAndFinish(this, Setup1Activity.class);
+		overridePendingTransition(R.anim.tran_pre_in, R.anim.tran_pre_out);
 	}
 
 }

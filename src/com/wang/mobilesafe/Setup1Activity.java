@@ -19,6 +19,8 @@ public class Setup1Activity extends BaseSetupActivity {
 	public void showNext() {
 		
 		ActivityUtil.startActivityAndFinish(this, Setup2Activity.class);
+		//动画切换的动画效果,必须在finish()方法后立即使用（注意使用位置）
+		overridePendingTransition(R.anim.tran_next_in, R.anim.tran_next_out);
 	}
 
 	@Override
