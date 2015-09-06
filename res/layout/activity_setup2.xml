@@ -16,13 +16,16 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray" >
+        android:background="@drawable/bing_bg_selector"
+        android:clickable="true" 
+        android:onClick="bindSim">
 
         <TextView
             style="@style/text_content_style"
             android:text="点击绑定SIM卡" />
 
         <ImageView
+            android:id="@+id/iv_setup2_bind"
             android:layout_width="30dip"
             android:layout_height="30dip"
             android:layout_alignParentRight="true"
