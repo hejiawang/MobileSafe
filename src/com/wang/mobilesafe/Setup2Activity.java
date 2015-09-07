@@ -64,11 +64,19 @@ public class Setup2Activity extends BaseSetupActivity {
 	 */
 	public void bindSim( View view ){
 		
+		String simnumber = tm.getSimSerialNumber();
+		
+		//首先判断，手机里是否有SIM卡
+		if ( TextUtils.isEmpty(simnumber) ) {
+			Toast.makeText(this, "手机中没有SIM卡", 0).show();
+			simnumber = "89014103211118510720";
+			//return ;
+		}
+		
 		//判断sp里面是否保存了sim卡的串号（SIM卡的身份证）
 		String sim = sp.getString("sim", "");
 		if ( TextUtils.isEmpty(sim) ) {
 			
-			String simnumber = tm.getSimSerialNumber();
 			Editor editor = sp.edit();
 			editor.putString("sim", simnumber);
 			editor.commit();

@@ -5,8 +5,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="17"
-        android:targetSdkVersion="17" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="21" />
 
     <!-- 访问网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,7 +18,15 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 获取手机联系人信息权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
+    <!-- 发送短信权限 -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <!-- 接收短信权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <!-- 定位位置权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
         android:targetPackage="com.wang.mobilesafe" />
@@ -28,7 +36,8 @@
         android:icon="@drawable/shenmatran"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar" >
-        <uses-library android:name="android.test.runner"/>
+        <uses-library android:name="android.test.runner" />
+
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name"
@@ -53,11 +62,22 @@
         </activity>
         <activity android:name=".Setup4Activity" >
         </activity>
-		<activity android:name=".SelectContactActivity" >
+        <activity android:name=".SelectContactActivity" >
         </activity>
+
         <receiver android:name=".receiver.OutCallReceiver" >
             <intent-filter android:priority="1000" >
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receiver.BootCompleteRecevier" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receiver.SmsReceiver" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
     </application>

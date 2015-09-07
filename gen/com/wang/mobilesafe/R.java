@@ -86,31 +86,33 @@ containing a value of this type.
         public static final int unlock=0x7f02001b;
     }
     public static final class id {
-        public static final int bt_fiest_entry_cancle=0x7f0a000d;
-        public static final int bt_fiest_entry_ok=0x7f0a000c;
-        public static final int bt_normal_entry_cancle=0x7f0a0010;
-        public static final int bt_normal_entry_ok=0x7f0a000f;
-        public static final int cb_setup4_satus=0x7f0a0005;
-        public static final int cb_status=0x7f0a0017;
-        public static final int ed_fiest_entry_pwd=0x7f0a000a;
-        public static final int ed_fiest_entry_pwd_confirm=0x7f0a000b;
-        public static final int ed_normal_entry_pwd=0x7f0a000e;
-        public static final int et_safenumber=0x7f0a0004;
+        public static final int bt_fiest_entry_cancle=0x7f0a000f;
+        public static final int bt_fiest_entry_ok=0x7f0a000e;
+        public static final int bt_normal_entry_cancle=0x7f0a0012;
+        public static final int bt_normal_entry_ok=0x7f0a0011;
+        public static final int cb_setup4_satus=0x7f0a0007;
+        public static final int cb_status=0x7f0a0019;
+        public static final int ed_fiest_entry_pwd=0x7f0a000c;
+        public static final int ed_fiest_entry_pwd_confirm=0x7f0a000d;
+        public static final int ed_normal_entry_pwd=0x7f0a0010;
+        public static final int et_safenumber=0x7f0a0006;
         public static final int gv_home=0x7f0a0000;
-        public static final int item_change_name=0x7f0a0018;
-        public static final int iv_home_icon=0x7f0a0011;
-        public static final int iv_setup2_bind=0x7f0a0003;
-        public static final int iv_splash_logo=0x7f0a0007;
-        public static final int lv_select_contact=0x7f0a0001;
-        public static final int rl_splash=0x7f0a0006;
-        public static final int sv_setting_update=0x7f0a0002;
-        public static final int tv_contact_name=0x7f0a0013;
-        public static final int tv_contact_phone=0x7f0a0014;
-        public static final int tv_home_name=0x7f0a0012;
-        public static final int tv_settingview_content=0x7f0a0016;
-        public static final int tv_settingview_title=0x7f0a0015;
-        public static final int tv_splash_appname=0x7f0a0008;
-        public static final int tv_splash_version=0x7f0a0009;
+        public static final int item_change_name=0x7f0a001a;
+        public static final int iv_home_icon=0x7f0a0013;
+        public static final int iv_lostfind_status=0x7f0a0002;
+        public static final int iv_setup2_bind=0x7f0a0005;
+        public static final int iv_splash_logo=0x7f0a0009;
+        public static final int lv_select_contact=0x7f0a0003;
+        public static final int rl_splash=0x7f0a0008;
+        public static final int sv_setting_update=0x7f0a0004;
+        public static final int tv_contact_name=0x7f0a0015;
+        public static final int tv_contact_phone=0x7f0a0016;
+        public static final int tv_home_name=0x7f0a0014;
+        public static final int tv_lostfind_number=0x7f0a0001;
+        public static final int tv_settingview_content=0x7f0a0018;
+        public static final int tv_settingview_title=0x7f0a0017;
+        public static final int tv_splash_appname=0x7f0a000a;
+        public static final int tv_splash_version=0x7f0a000b;
     }
     public static final class layout {
         public static final int activity_home=0x7f030000;
