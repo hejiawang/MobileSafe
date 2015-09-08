@@ -70,6 +70,10 @@ public class HomeActivity extends Activity implements OnClickListener {
 						showFirstEntryDialog();
 					}
 					break;
+				case 7:
+					intent = new Intent(HomeActivity.this, AtoolsActivity.class);
+					startActivity(intent);
+					break;
 				case 8:
 					intent = new Intent(HomeActivity.this, SettingActivity.class);
 					startActivity(intent);

@@ -9,6 +9,7 @@ import java.net.URL;
 
 import com.wang.mobilesafe.domain.UpdateInfo;
 import com.wang.mobilesafe.engine.UpdateInfoParser;
+import com.wang.mobilesafe.utils.CopyFileUtil;
 import com.wang.mobilesafe.utils.DownLoadUtil;
 
 import android.app.Activity;
@@ -40,6 +41,7 @@ public class SplashActivity extends Activity {
 	public static final int NETWORK_ERROR = 14;
 	private static final int DOWNLOAD_SUCCESS = 15;
 	private static final int DOWNLOAD_ERROR= 16;
+	private static final int COPY_ERROR = 17;
 	
 	protected static final String TAG = "SplashActivity";
 
@@ -94,6 +96,9 @@ public class SplashActivity extends Activity {
 				System.out.println("安装apk" + file.getAbsolutePath());
 				finish();
 				break;
+			case COPY_ERROR:
+				Toast.makeText(getApplicationContext(), "Copy数据库异常", 0).show();
+				break;
 			}
 
 		}
@@ -114,9 +119,51 @@ public class SplashActivity extends Activity {
 		AlphaAnimation aa = new AlphaAnimation(0.2f, 1.0f);
 		aa.setDuration(2000);
 		findViewById(R.id.rl_splash).startAnimation(aa);
+		
+		//拷贝关键文件到系统目录,耗时操作,要新起线程
+		//1. 查询手机号码归属地的数据库文件
+		copyAddressDB();
 
 	}
 
+	/**
+	 * 释放数据库文件到系统目录
+	 */
+	private void copyAddressDB(){
+		
+		final File file = new File(getFilesDir(), "address.db");
+		if ( file.exists() && file.length()>0 ) {
+			//...
+		} else {
+			
+			new Thread(){
+				
+				public void run() {
+					
+					Message msg = Message.obtain();
+					try {
+						
+						InputStream is = getAssets().open("address.db");
+						File f = CopyFileUtil.copyFile(is, file.getAbsolutePath());
+						if ( f != null ) {
+							//...
+						} else {
+							
+							msg.what = COPY_ERROR;
+						}
+					} catch (IOException e) {
+						
+						e.printStackTrace();
+						msg.what = COPY_ERROR;
+					} finally {
+						
+						handler.sendMessage(msg);
+					}
+				};
+			}.start();
+		}
+	}
+	
 	/**
 	 * 安装apk文件
 	 * @param file 要安装的apk文件
