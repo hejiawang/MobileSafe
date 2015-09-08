@@ -11,6 +11,14 @@
 
     <TextView
         style="@style/text_content_style"
+        android:layout_width="match_parent"
+        android:background="@drawable/bing_bg_selector"
+        android:clickable="true"
+        android:onClick="activeAdmin"
+        android:text="点击启用超级管理员权限\n开启后可以远程锁屏,清除数据" />
+
+    <TextView
+        style="@style/text_content_style"
         android:text="强雷建议您开启防盗保护" />
 
     <CheckBox
