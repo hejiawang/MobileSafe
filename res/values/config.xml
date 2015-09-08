@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="serverurl">http://10.0.2.2:8080/update.xml</string>
+    <string name="serverurl">http://10.10.12.120:8080/update.xml</string>
     
 </resources>
