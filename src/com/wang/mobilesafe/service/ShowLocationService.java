@@ -1,7 +1,5 @@
 package com.wang.mobilesafe.service;
 
-import com.wang.mobilesafe.db.dao.AddressDao;
-
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,9 +10,13 @@ import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.wang.mobilesafe.db.dao.AddressDao;
 
 public class ShowLocationService extends Service {
 
@@ -74,6 +76,11 @@ public class ShowLocationService extends Service {
 		tv = new TextView(this);
 		tv.setTextSize(25);
 		tv.setTextColor(Color.RED);
+		
+//		View view = View.inflate(this, R.layout.ui_toast, null);
+//		tv = (TextView) view.findViewById(R.id.tv_toast_address);
+		
+		
 		tv.setText(AddressDao.getAddress(incomingNumber));
 		
 		params.height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -96,9 +103,9 @@ public class ShowLocationService extends Service {
 		 */
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber) {
-
+			
 			switch (state) {
-			case TelephonyManager.CALL_STATE_IDLE: // 空闲状态
+			case TelephonyManager.CALL_STATE_IDLE: // 空闲状态,挂断.....
 				//不打电话时，移除归属地信息
 				if ( tv != null ) {
 					wm.removeView(tv);
@@ -113,6 +120,9 @@ public class ShowLocationService extends Service {
 			case TelephonyManager.CALL_STATE_OFFHOOK: // 通话状态
 
 				break;
+//			case TelephonyManager.SIM_STATE_ABSENT:
+//
+//				break;
 			}
 			super.onCallStateChanged(state, incomingNumber);
 		}
@@ -125,7 +135,12 @@ public class ShowLocationService extends Service {
 			
 			Log.i(TAG, "发现外拨电话");
 			//Toast.makeText(context, AddressDao.getAddress(getResultData()), 1).show();
-			showAddressInfo(getResultData());
+			//如果没有SIM卡
+			String simnumber = tm.getSimSerialNumber();
+			if ( !TextUtils.isEmpty(simnumber) ) {
+				//Toast.makeText(getApplicationContext(), "手机中没有SIM卡", 0).show();
+				showAddressInfo(getResultData());
+			}
 		}
 	}
 	

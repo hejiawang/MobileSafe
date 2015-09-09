@@ -100,7 +100,7 @@ containing a value of this type.
         public static final int et_query_number=0x7f0c0003;
         public static final int et_safenumber=0x7f0c0009;
         public static final int gv_home=0x7f0c0000;
-        public static final int item_change_name=0x7f0c001d;
+        public static final int item_change_name=0x7f0c001e;
         public static final int iv_home_icon=0x7f0c0016;
         public static final int iv_lostfind_status=0x7f0c0002;
         public static final int iv_setup2_bind=0x7f0c0008;
@@ -118,6 +118,7 @@ containing a value of this type.
         public static final int tv_settingview_title=0x7f0c001a;
         public static final int tv_splash_appname=0x7f0c000d;
         public static final int tv_splash_version=0x7f0c000e;
+        public static final int tv_toast_address=0x7f0c001d;
     }
     public static final class layout {
         public static final int activity_atools=0x7f030000;
@@ -136,6 +137,7 @@ containing a value of this type.
         public static final int grid_home_item=0x7f03000d;
         public static final int list_contact_item=0x7f03000e;
         public static final int ui_setting_view=0x7f03000f;
+        public static final int ui_toast=0x7f030010;
     }
     public static final class menu {
         public static final int lost_find_menu=0x7f0b0000;
