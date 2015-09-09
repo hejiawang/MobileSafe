@@ -24,4 +24,13 @@
         android:layout_height="wrap_content"
         ></com.wang.mobilesafe.ui.SettingView>
     
+    <com.wang.mobilesafe.ui.SettingView 
+        android:id="@+id/sv_setting_showaddress"
+        mobilesafe:title="号码归属地设置"
+        mobilesafe:unchecked_text="号码归属地查询没有开启"
+        mobilesafe:checked_text="号码归属地查询已经开启"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        ></com.wang.mobilesafe.ui.SettingView>
+    
 </LinearLayout>

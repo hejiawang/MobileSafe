@@ -1,11 +1,13 @@
 package com.wang.mobilesafe.receiver;
 
 import com.wang.mobilesafe.LostFindActivity;
+import com.wang.mobilesafe.db.dao.AddressDao;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * 外拨电话广播接收者;
@@ -23,7 +25,7 @@ public class OutCallReceiver extends BroadcastReceiver {
 		
 		Log.i(TAG , "手机外拨电话了");
 		String number = getResultData();	//获得外拨电话所对应的电话号码
-		
+		//Toast.makeText(context, AddressDao.getAddress(number), 1).show();
 		if ( "20182018".equals(number)) {
 			Intent intent = new Intent(context, LostFindActivity.class);
 			//告诉intent，将界面放在自己的栈里面

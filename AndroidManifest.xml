@@ -71,6 +71,9 @@
         <activity android:name=".NumberQueryActivity" >
         </activity>
 
+        <service android:name=".service.ShowLocationService" >
+        </service>
+
         <receiver android:name=".receiver.OutCallReceiver" >
             <intent-filter android:priority="1000" >
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
