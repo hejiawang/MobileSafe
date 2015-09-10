@@ -5,28 +5,36 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.wang.mobilesafe.R;
 import com.wang.mobilesafe.db.dao.AddressDao;
 
 public class ShowLocationService extends Service {
 
 	public static final String TAG = "ShowLocationService";
+	//"半透明","活力橙","卫士蓝","金属灰","苹果绿"
+	private static final int[] bgs = {R.drawable.call_locate_white,
+		R.drawable.call_locate_orange,
+		R.drawable.call_locate_blue,
+		R.drawable.call_locate_gray,
+		R.drawable.call_locate_green};
 	
+	private SharedPreferences sp;
 	private TelephonyManager tm;
 	private myPhoneListener listener;
 	private InnerOutCallReceiver receiver;
 	private WindowManager wm;
-	private TextView tv;
+	private View view;
 
 	private final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
 	
@@ -52,7 +60,7 @@ public class ShowLocationService extends Service {
 		registerReceiver(receiver, filter);
 		
 		wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-		
+		sp = getSharedPreferences("config", MODE_PRIVATE);
 		super.onCreate();
 	}
 
@@ -73,16 +81,15 @@ public class ShowLocationService extends Service {
 	 */
 	public void showAddressInfo( String incomingNumber ){
 		
-		tv = new TextView(this);
-		tv.setTextSize(25);
-		tv.setTextColor(Color.RED);
+//		tv = new TextView(this);
+//		tv.setTextSize(25);
+//		tv.setTextColor(Color.RED);
 		
-//		View view = View.inflate(this, R.layout.ui_toast, null);
-//		tv = (TextView) view.findViewById(R.id.tv_toast_address);
-		
-		
+		view = View.inflate(this, R.layout.ui_toast, null);
+		TextView tv = (TextView) view.findViewById(R.id.tv_toast_address);
 		tv.setText(AddressDao.getAddress(incomingNumber));
-		
+		int which = sp.getInt("which", 0);
+		view.setBackgroundResource(bgs[which]);
 		params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.format = PixelFormat.TRANSLUCENT;
@@ -93,7 +100,7 @@ public class ShowLocationService extends Service {
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
 		
-		wm.addView(tv, params);
+		wm.addView(view, params);
 	}
 	
 	private class myPhoneListener extends PhoneStateListener {
@@ -107,9 +114,9 @@ public class ShowLocationService extends Service {
 			switch (state) {
 			case TelephonyManager.CALL_STATE_IDLE: // 空闲状态,挂断.....
 				//不打电话时，移除归属地信息
-				if ( tv != null ) {
-					wm.removeView(tv);
-					tv = null;
+				if ( view != null ) {
+					wm.removeView(view);
+					view = null;
 				}
 				break;
 			case TelephonyManager.CALL_STATE_RINGING: // 响铃状态
@@ -120,9 +127,6 @@ public class ShowLocationService extends Service {
 			case TelephonyManager.CALL_STATE_OFFHOOK: // 通话状态
 
 				break;
-//			case TelephonyManager.SIM_STATE_ABSENT:
-//
-//				break;
 			}
 			super.onCallStateChanged(state, incomingNumber);
 		}
