@@ -13,7 +13,9 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -91,6 +93,37 @@ public class ShowLocationService extends Service {
 		tv.setText(AddressDao.getAddress(incomingNumber));
 		int which = sp.getInt("which", 0);
 		view.setBackgroundResource(bgs[which]);
+		view.setOnTouchListener(new OnTouchListener() {
+			
+			int startX = 0;
+			int startY = 0;
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					startX = (int) event.getRawX();
+					startY = (int) event.getRawY();
+					break;
+				case MotionEvent.ACTION_MOVE:
+					int newX = (int) event.getRawX();
+					int newY = (int) event.getRawY();
+					int dx = newX - startX;
+					int dy = newY - startY;
+					
+					params.x += dx;
+					params.y += dy;
+					
+					wm.updateViewLayout(view, params);
+					
+					startX = (int) event.getRawX();
+					startY = (int) event.getRawY();
+					break;
+				}
+				return true;
+			}
+		});
 		params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.gravity = Gravity.TOP | Gravity.LEFT;
@@ -100,12 +133,10 @@ public class ShowLocationService extends Service {
         params.y = lastY;
         params.format = PixelFormat.TRANSLUCENT;
         //params.windowAnimations = com.android.internal.R.style.Animation_Toast;
-        params.type = WindowManager.LayoutParams.TYPE_TOAST;
+        params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
         params.setTitle("Toast");
-        params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
-		
+		params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+				| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
 		wm.addView(view, params);
 	}
 	

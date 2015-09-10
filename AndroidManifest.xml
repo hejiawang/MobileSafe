@@ -29,9 +29,11 @@
     <!-- 震动权限 -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <!-- 拖拽桌面上的控件的权限 -->
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
         android:targetPackage="com.wang.mobilesafe" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
