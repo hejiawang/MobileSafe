@@ -35,9 +35,9 @@
 
     <RelativeLayout
         android:id="@+id/rl_setting_changebg"
-        android:background="@drawable/home_selector"
         android:layout_width="match_parent"
-        android:layout_height="64dip" >
+        android:layout_height="64dip"
+        android:background="@drawable/home_selector" >
 
         <TextView
             android:id="@+id/tv_setting_addressbg"
@@ -58,15 +58,54 @@
             android:layout_marginTop="5dip"
             android:text="半透明"
             android:textAppearance="?android:attr/textAppearanceSmall" />
-		
-        <ImageView 
+
+        <ImageView
             android:layout_width="25dip"
             android:layout_height="25dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dip"
-            android:src="@drawable/jiantou1"
-            />
+            android:src="@drawable/jiantou1" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/listview_devider" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_setting_change_location"
+        android:layout_width="match_parent"
+        android:layout_height="64dip"
+        android:background="@drawable/home_selector" >
+
+        <TextView
+            android:id="@+id/tv_setting_addressbg_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dip"
+            android:layout_marginTop="5dip"
+            android:text="归属地提示框位置"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_setting_addressbg_location"
+            android:layout_below="@+id/tv_setting_addressbg_location"
+            android:layout_marginLeft="7dip"
+            android:layout_marginTop="5dip"
+            android:text="设置归属地提示框的显示位置"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <ImageView
+            android:layout_width="25dip"
+            android:layout_height="25dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:src="@drawable/jiantou1" />
 
         <View
             android:layout_width="wrap_content"

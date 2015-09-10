@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.wang.mobilesafe.service.ShowLocationService;
 import com.wang.mobilesafe.ui.SettingView;
+import com.wang.mobilesafe.utils.ActivityUtil;
 import com.wang.mobilesafe.utils.ServiceStatusUtil;
 
 public class SettingActivity extends Activity implements OnClickListener {
@@ -22,6 +23,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 	private SettingView sv_setting_update;
 	private SettingView sv_setting_showaddress;
 	private RelativeLayout rl_setting_changebg;
+	private RelativeLayout rl_setting_change_location;
 	private TextView tv_setting_addressbg_color;
 
 	private SharedPreferences sp;
@@ -93,6 +95,11 @@ public class SettingActivity extends Activity implements OnClickListener {
 		int which = sp.getInt("which", 0);
 		tv_setting_addressbg_color.setText(items[which]);
 		//归属地提示风格end
+		
+		//归属地提示位置start
+		rl_setting_change_location = (RelativeLayout) findViewById(R.id.rl_setting_change_location);
+		rl_setting_change_location.setOnClickListener(this);
+		//归属地提示位置end
 	}
 	
 	/**
@@ -116,6 +123,9 @@ public class SettingActivity extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.rl_setting_changebg:
 			showChangeBgDialog();
+			break;
+		case R.id.rl_setting_change_location:
+			ActivityUtil.startActivity(this, DragViewActivity.class);
 			break;
 		}
 	}

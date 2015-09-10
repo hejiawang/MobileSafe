@@ -54,4 +54,8 @@
         <item name="android:text">上一步</item>
     </style>
 
+    <style name="Theme.Wallpaper" parent="android:style/Theme.Wallpaper">
+        <item name="android:colorForeground">#fff</item>
+    </style>
+
 </resources>
