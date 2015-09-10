@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -30,6 +31,8 @@ public class DragViewActivity extends Activity {
 
 	private Display display;
 	private SharedPreferences sp;
+	
+	private long firstClickTime;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class DragViewActivity extends Activity {
 		}
 		tv_drag_view.setLayoutParams(tv_params);
 		
+		//拖拽移动事件
 		iv_drag_view.setOnTouchListener(new OnTouchListener() {
 			
 			//定义初始坐标
@@ -133,7 +137,54 @@ public class DragViewActivity extends Activity {
 					
 					break;
 				}
-				return true;
+				return false;	//注意这个返回值,如果没有下面的单机(双击)事件,要返回false
+			}
+		});
+		
+		//双击事件
+		iv_drag_view.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				Log.i(TAG, "被点击了......");
+				if ( firstClickTime > 0 ) {
+					
+					//第二次点击
+					long secondClickTime = System.currentTimeMillis();
+					if ( (secondClickTime - firstClickTime) < 500 ) {
+						
+						//双击事件
+						Log.i(TAG, "被双击了......");
+						int iv_width = iv_drag_view.getRight() - iv_drag_view.getLeft();
+						int l = (display.getWidth() - iv_width)/2;
+						int r = (display.getWidth() + iv_width)/2;
+						iv_drag_view.layout(l, iv_drag_view.getTop(), r, iv_drag_view.getBottom());
+						
+						Editor editor = sp.edit();
+						editor.putInt("lastX", iv_drag_view.getLeft());
+						editor.putInt("lastY", iv_drag_view.getTop());
+						editor.commit();
+					}
+					firstClickTime = 0;
+				}
+				
+				//判断是否是一次点击,记录点击时间
+				firstClickTime = System.currentTimeMillis();
+				
+				//点击了一次,过一段时间将firstClickTime清零,
+				new Thread(){
+					
+					public void run() {
+					
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						firstClickTime = 0;
+					}
+				}.start();
 			}
 		});
 	}
