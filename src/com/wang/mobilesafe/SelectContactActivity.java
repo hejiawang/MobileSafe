@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.wang.mobilesafe.domain.ContactInfo;
 import com.wang.mobilesafe.engine.ContactInfoProvider;
+import com.wang.mobilesafe.utils.MyAsyncTask;
 
 public class SelectContactActivity extends Activity {
 
@@ -23,15 +24,6 @@ public class SelectContactActivity extends Activity {
 	private View loading;
 
 	private List<ContactInfo> infos;
-
-	private Handler handler = new Handler() {
-
-		public void handleMessage(android.os.Message msg) {
-
-			lv_select_contact.setAdapter(new ContactAdapter());
-			loading.setVisibility(View.INVISIBLE);
-		};
-	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,22 +33,33 @@ public class SelectContactActivity extends Activity {
 
 		lv_select_contact = (ListView) findViewById(R.id.lv_select_contact);
 		loading = findViewById(R.id.loading);
-		loading.setVisibility(View.VISIBLE);
 
-		new Thread() {
+		MyAsyncTask task = new MyAsyncTask() {
 
-			public void run() {
+			@Override
+			public void onPreExecute() {
+
+				loading.setVisibility(View.VISIBLE);
+			}
+
+			@Override
+			public void onPostExecute() {
+
+				lv_select_contact.setAdapter(new ContactAdapter());
+				loading.setVisibility(View.INVISIBLE);
+			}
+
+			@Override
+			public void doInBackground() {
 
 				infos = ContactInfoProvider
 						.getContactInfos(SelectContactActivity.this); // 耗时操作
-				handler.sendEmptyMessage(0);
-			};
-		}.start();
+			}
+		};
+		task.execute();
 
-		// infos = ContactInfoProvider.getContactInfos(this); //耗时操作
-
+		// infos = ContactInfoProvider.getContactInfos(this); //耗时操作(应该放在子线程中)
 		// lv_select_contact.setAdapter(new ContactAdapter());
-
 		lv_select_contact.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
