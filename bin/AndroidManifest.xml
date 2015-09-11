@@ -33,6 +33,7 @@
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
         android:targetPackage="com.wang.mobilesafe" />
+
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
@@ -75,6 +76,8 @@
         <activity
             android:name=".DragViewActivity"
             android:theme="@style/Theme.Wallpaper" >
+        </activity>
+        <activity android:name=".CallSmsSafeActivity" >
         </activity>
 
         <service android:name=".service.ShowLocationService" >

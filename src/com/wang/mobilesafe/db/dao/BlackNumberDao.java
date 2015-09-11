@@ -1,10 +1,14 @@
 package com.wang.mobilesafe.db.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.wang.mobilesafe.db.BlackNumberDBOpenHelper;
+import com.wang.mobilesafe.domain.BlackNumberInfo;
 
 public class BlackNumberDao {
 	
@@ -74,5 +78,36 @@ public class BlackNumberDao {
 		} else {
 			return true;
 		}
+	}
+	
+	/**
+	 * 获取全部黑名单信息
+	 * @return 黑名单集合
+	 */
+	public List<BlackNumberInfo> findAll(){
+		
+		
+		List<BlackNumberInfo> infos = new ArrayList<BlackNumberInfo>();
+		SQLiteDatabase db = helper.getWritableDatabase();
+		Cursor cursor = db.rawQuery("select number, mode from blacknumber", null);
+		while ( cursor.moveToNext() ){
+		
+			BlackNumberInfo info = new BlackNumberInfo();
+			info.setMode(cursor.getString(1));
+			info.setNumber(cursor.getString(0));
+			infos.add(info);
+			info = null;
+		}
+		cursor.close();
+		db.close();
+		
+		//为了测试耗时效果
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		return infos;
 	}
 }
