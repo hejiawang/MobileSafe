@@ -58,4 +58,8 @@
         <item name="android:colorForeground">#fff</item>
     </style>
 
+    <style name="my_progress_style" parent="@android:style/Widget.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/progress_medium_white</item>
+    </style>
+
 </resources>

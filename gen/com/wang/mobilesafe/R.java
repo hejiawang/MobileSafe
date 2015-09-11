@@ -84,15 +84,16 @@ containing a value of this type.
         public static final int notification=0x7f020017;
         public static final int phone=0x7f020018;
         public static final int previous=0x7f020019;
-        public static final int safe=0x7f02001a;
-        public static final int settings=0x7f02001b;
-        public static final int setup1=0x7f02001c;
-        public static final int shenmatran=0x7f02001d;
-        public static final int splashbk=0x7f02001e;
-        public static final int sysoptimize=0x7f02001f;
-        public static final int taskmanager=0x7f020020;
-        public static final int trojan=0x7f020021;
-        public static final int unlock=0x7f020022;
+        public static final int progress_medium_white=0x7f02001a;
+        public static final int safe=0x7f02001b;
+        public static final int settings=0x7f02001c;
+        public static final int setup1=0x7f02001d;
+        public static final int shenmatran=0x7f02001e;
+        public static final int splashbk=0x7f02001f;
+        public static final int sysoptimize=0x7f020020;
+        public static final int taskmanager=0x7f020021;
+        public static final int trojan=0x7f020022;
+        public static final int unlock=0x7f020023;
     }
     public static final class id {
         public static final int bt_fiest_entry_cancle=0x7f0c001b;
@@ -181,13 +182,14 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f0a0008;
+        public static final int AppBaseTheme=0x7f0a0009;
         public static final int Theme_Wallpaper=0x7f0a0007;
         public static final int button_next_style=0x7f0a0005;
         public static final int button_pre_style=0x7f0a0006;
         public static final int image_off_style=0x7f0a0004;
         public static final int image_on_style=0x7f0a0003;
         public static final int image_star_style=0x7f0a0002;
+        public static final int my_progress_style=0x7f0a0008;
         public static final int text_content_style=0x7f0a0001;
         public static final int text_title_style=0x7f0a0000;
     }
