@@ -60,6 +60,13 @@ public class ContactInfoProvider {
 		}
 		cursor.close();
 
+		//为了模拟手机联系人多的情况,便于测试.
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		return infos;
 	}
 }
