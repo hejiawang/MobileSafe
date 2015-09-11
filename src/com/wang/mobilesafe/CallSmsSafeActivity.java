@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wang.mobilesafe.db.dao.BlackNumberDao;
@@ -81,24 +82,52 @@ public class CallSmsSafeActivity extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			
-			Log.i(TAG, "getView : " + position);
-			
 			BlackNumberInfo info = infos.get(position);
 			String mode = info.getMode();
 			
-			View view = View.inflate(getApplicationContext(), R.layout.list_callsms_item, null);
-			TextView tv_call_sms_number = (TextView) view.findViewById(R.id.tv_call_sms_number);
-			TextView tv_call_sms_mode = (TextView) view.findViewById(R.id.tv_call_sms_mode);
-			tv_call_sms_number.setText(info.getNumber());
+			ViewHolder holder;
+			
+			View view ;
+			if ( convertView!=null && convertView instanceof RelativeLayout ) {
+				
+				view = convertView;	//复用历史缓存的View对象
+				//Log.i(TAG, "使用缓存View : " + position);
+				holder = (ViewHolder)view.getTag();
+			} else {
+				
+				view = View.inflate(getApplicationContext(), R.layout.list_callsms_item, null);
+				//Log.i(TAG, "创建新的View : " + position);
+				//寻找到孩子引用，把引用存起来
+				holder = new ViewHolder();
+				holder.tv_call_sms_mode = (TextView) view.findViewById(R.id.tv_call_sms_mode);
+				holder.tv_call_sms_number = (TextView) view.findViewById(R.id.tv_call_sms_number);
+				view.setTag(holder);
+				
+			}
+		
+			//View view = View.inflate(getApplicationContext(), R.layout.list_callsms_item, null);
+			//TextView tv_call_sms_number = (TextView) view.findViewById(R.id.tv_call_sms_number);
+			//TextView tv_call_sms_mode = (TextView) view.findViewById(R.id.tv_call_sms_mode);
+			holder.tv_call_sms_number.setText(info.getNumber());
 			
 			if ( mode.equals("1") ) {
-				tv_call_sms_mode.setText("全部拦截");
+				holder.tv_call_sms_mode.setText("全部拦截");
 			} else if ( mode.equals("2") ) {
-				tv_call_sms_mode.setText("电话拦截");
+				holder.tv_call_sms_mode.setText("电话拦截");
 			} else if ( mode.equals("3") ) {
-				tv_call_sms_mode.setText("短信拦截");
+				holder.tv_call_sms_mode.setText("短信拦截");
 			}
 			return view;
 		}
+	}
+	
+	/**
+	 * View对象孩子引用的容器.
+	 * @author HeJW
+	 *
+	 */
+	static class ViewHolder{
+		TextView tv_call_sms_number;
+		TextView tv_call_sms_mode;
 	}
 }
