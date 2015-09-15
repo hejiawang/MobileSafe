@@ -7,12 +7,9 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +24,7 @@ import com.wang.mobilesafe.db.dao.BlackNumberDao;
 import com.wang.mobilesafe.domain.BlackNumberInfo;
 import com.wang.mobilesafe.utils.MyAsyncTask;
 
-public class CallSmsSafeActivity extends Activity implements OnClickListener {
+public class CallSmsSafeActivity__normal extends Activity implements OnClickListener {
 
 	public static final String TAG = "CallSmsSafeActivity";
 
@@ -38,61 +35,18 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 	private List<BlackNumberInfo> infos;
 	
 	private CallSmsAdapter adapter;
-	private int maxnumber = 20;
-	private int offset = 0;
-	private int totalNumber;	//总共有多少条黑名单号码.
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_call_sms);
 
-		dao = new BlackNumberDao(this);
-		totalNumber = dao.getMaxNumber();
-		
 		lv_call_sms = (ListView) findViewById(R.id.lv_call_sms);
 		loading = findViewById(R.id.loading);
 
-		lv_call_sms.setOnScrollListener(new OnScrollListener() {
-			
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				
-				switch (scrollState) {
-				case OnScrollListener.SCROLL_STATE_IDLE:
-					
-					int position = lv_call_sms.getLastVisiblePosition();	//19
-					int total = infos.size();	//20
-					if ( position == (total-1) ) {
-						
-						offset += maxnumber;
-						if ( offset > totalNumber ) {
-							Toast.makeText(getApplicationContext(), "没有数据了", 1).show();
-							return;
-						}
-						
-						Log.i(TAG, "移动到了最后......");
-						fillData();
-					}
-					break;
-				}
-			}
-			
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
-			}
-		});
+		dao = new BlackNumberDao(this);
 
-		fillData();
-	}
-
-	/**
-	 * 为ListView填充数据
-	 */
-	private void fillData(){
-		
 		MyAsyncTask task = new MyAsyncTask() {
 
 			@Override
@@ -104,29 +58,20 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 			@Override
 			public void onPostExecute() {
 				
-				if ( adapter == null ) {
-					adapter = new CallSmsAdapter();
-					lv_call_sms.setAdapter( adapter );
-				} else {
-					adapter.notifyDataSetChanged();
-				}
+				adapter = new CallSmsAdapter();
+				lv_call_sms.setAdapter( adapter );
 				loading.setVisibility(View.INVISIBLE);
 			}
 
 			@Override
 			public void doInBackground() {
-				
-				if ( infos == null ) {
-					infos = dao.findByPage(maxnumber, offset); // 耗时操作
-				} else {
-					infos.addAll( dao.findByPage(maxnumber, offset) );
-				}
-				
+
+				infos = dao.findAll(); // 耗时操作
 			}
 		};
 		task.execute();
 	}
-	
+
 	private EditText ed_blacknumber;
 	private RadioGroup rg_mode;
 	private Button bt_ok;
