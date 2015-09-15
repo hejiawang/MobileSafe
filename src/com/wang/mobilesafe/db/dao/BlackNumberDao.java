@@ -89,7 +89,7 @@ public class BlackNumberDao {
 		
 		List<BlackNumberInfo> infos = new ArrayList<BlackNumberInfo>();
 		SQLiteDatabase db = helper.getWritableDatabase();
-		Cursor cursor = db.rawQuery("select number, mode from blacknumber", null);
+		Cursor cursor = db.rawQuery("select number, mode from blacknumber order by _id desc", null);
 		while ( cursor.moveToNext() ){
 		
 			BlackNumberInfo info = new BlackNumberInfo();
@@ -102,11 +102,11 @@ public class BlackNumberDao {
 		db.close();
 		
 		//为了测试耗时效果
-		try {
+		/*try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		return infos;
 	}

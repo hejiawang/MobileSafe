@@ -5,14 +5,28 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="45dip"
-        android:background="#355E9E"
-        android:gravity="center"
-        android:text="通讯卫士"
-        android:textColor="#EBC950"
-        android:textSize="23dip" />
+        android:layout_height="45dip" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="45dip"
+            android:background="#355E9E"
+            android:gravity="center"
+            android:text="通讯卫士"
+            android:textColor="#EBC950"
+            android:textSize="23dip" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_bg_selector"
+            android:onClick="addBlackNumber"
+            android:text="添加" />
+    </RelativeLayout>
 
     <FrameLayout
         android:layout_width="fill_parent"
@@ -40,7 +54,9 @@
         <ListView
             android:id="@+id/lv_call_sms"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="fill_parent"
+            android:fastScrollEnabled="true"
+             >
         </ListView>
     </FrameLayout>
 

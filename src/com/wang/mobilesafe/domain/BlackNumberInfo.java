@@ -5,6 +5,16 @@ public class BlackNumberInfo {
 	private String number;
 	private String mode;
 
+	public BlackNumberInfo(){
+		
+	}
+	
+	public BlackNumberInfo( String number, String mode){
+		
+		this.number = number;
+		this.setMode(mode);
+	}
+	
 	public String getNumber() {
 		return number;
 	}

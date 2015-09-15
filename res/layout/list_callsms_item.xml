@@ -24,7 +24,8 @@
         android:text="拦截模式"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <ImageView 
+    <ImageView
+        android:id="@+id/iv_callsms_delete" 
         android:clickable="true"
         android:focusable="false"
         android:focusableInTouchMode="false"
