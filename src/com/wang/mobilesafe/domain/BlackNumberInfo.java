@@ -1,6 +1,8 @@
 package com.wang.mobilesafe.domain;
 
-public class BlackNumberInfo {
+import java.io.Serializable;
+
+public class BlackNumberInfo implements Serializable {
 
 	private String number;
 	private String mode;
