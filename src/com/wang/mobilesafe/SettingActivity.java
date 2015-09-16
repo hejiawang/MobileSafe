@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.wang.mobilesafe.service.CallSmsFireWallSerivce;
 import com.wang.mobilesafe.service.ShowLocationService;
 import com.wang.mobilesafe.ui.SettingView;
 import com.wang.mobilesafe.utils.ActivityUtil;
@@ -25,9 +26,11 @@ public class SettingActivity extends Activity implements OnClickListener {
 	private RelativeLayout rl_setting_changebg;
 	private RelativeLayout rl_setting_change_location;
 	private TextView tv_setting_addressbg_color;
-
+	private SettingView sv_setting_callsmsfirewall;
+		
 	private SharedPreferences sp;
 	private Intent showAddressService;
+	private Intent callSmsFireWallIntent;
 	
 	String[] items = new String[]{"半透明","活力橙","卫士蓝","金属灰","苹果绿"};
 
@@ -100,6 +103,25 @@ public class SettingActivity extends Activity implements OnClickListener {
 		rl_setting_change_location = (RelativeLayout) findViewById(R.id.rl_setting_change_location);
 		rl_setting_change_location.setOnClickListener(this);
 		//归属地提示位置end
+		
+		//通讯防火墙设置start
+		sv_setting_callsmsfirewall = (SettingView)findViewById(R.id.sv_setting_callsmsfirewall);
+		callSmsFireWallIntent = new Intent(this, CallSmsFireWallSerivce.class);
+		sv_setting_callsmsfirewall.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				if (sv_setting_callsmsfirewall.isChecked()) {
+					sv_setting_callsmsfirewall.setChecked(false);
+					stopService(callSmsFireWallIntent);
+				} else {
+					sv_setting_callsmsfirewall.setChecked(true);
+					startService(callSmsFireWallIntent);
+				}
+			}
+		});
+		//通讯防火墙设置end
 	}
 	
 	/**
@@ -114,6 +136,13 @@ public class SettingActivity extends Activity implements OnClickListener {
 		} else {
 			sv_setting_showaddress.setChecked(false);
 		} 
+		
+		if ( ServiceStatusUtil.isServiceRuuing("com.wang.mobilesafe.service.CallSmsFireWallSerivce", this) ) {
+			sv_setting_callsmsfirewall.setChecked(true);
+		} else {
+			sv_setting_callsmsfirewall.setChecked(false);
+		} 
+		
 		super.onStart();
 	}
 

@@ -35,6 +35,9 @@
         android:targetPackage="com.wang.mobilesafe" />
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- 挂断电话的权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
 
     <application
         android:name="MobileSafeApplication"
@@ -86,6 +89,8 @@
         </activity>
 
         <service android:name=".service.ShowLocationService" >
+        </service>
+        <service android:name=".service.CallSmsFireWallSerivce" >
         </service>
 
         <receiver android:name=".receiver.OutCallReceiver" >

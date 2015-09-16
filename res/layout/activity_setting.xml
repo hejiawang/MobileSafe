@@ -114,4 +114,12 @@
             android:background="@drawable/listview_devider" />
     </RelativeLayout>
 
-</LinearLayout>
+    <com.wang.mobilesafe.ui.SettingView
+        android:id="@+id/sv_setting_callsmsfirewall"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        mobilesafe:checked_text="短信电话防火墙已经开启"
+        mobilesafe:title="通讯防火墙设置"
+        mobilesafe:unchecked_text="短信电话防火墙没有开启" >
+    </com.wang.mobilesafe.ui.SettingView>
+</LinearLayout>

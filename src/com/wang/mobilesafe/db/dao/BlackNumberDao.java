@@ -171,4 +171,27 @@ public class BlackNumberDao {
 		db.close();
 		return maxNumber;
 	}
+
+	/**
+	 * 查找一个黑名单号码的拦截模式
+	 * 
+	 * @param number
+	 *            黑名单号码
+	 * @return 返回-1代表不是黑名单号码,1——全部,2——电话,3——短信
+	 */
+	public String findMode(String number) {
+
+		String result = "-1";
+		SQLiteDatabase db = helper.getReadableDatabase();
+		Cursor cursor = db.rawQuery("select mode from blacknumber where number=?",
+				new String[] { number });
+		if (cursor.moveToNext()) {
+
+			result = cursor.getString(0);
+		}
+		cursor.close();
+		db.close();
+
+		return result;
+	}
 }
