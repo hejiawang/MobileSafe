@@ -38,21 +38,32 @@ public class AtoolsActivity extends Activity {
 	 * @param view
 	 */
 	public void createIcon(View view) {
-	
+
 		Intent intent = new Intent();
 		intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
 		// 不允许重复创建
 		intent.putExtra("duplicate", false);
-		
+
 		Intent shortCutIntent = new Intent();
 		shortCutIntent.setAction("com.wang.xxx");
 		shortCutIntent.addCategory(Intent.CATEGORY_DEFAULT);
-		
+
 		intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortCutIntent);
-    	intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "手机卫士");
-    	intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
-    	sendBroadcast(intent);
-    	
-    	Toast.makeText(this, "创建成功", 1).show();
+		intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "手机卫士");
+		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, BitmapFactory
+				.decodeResource(getResources(), R.drawable.ic_launcher));
+		sendBroadcast(intent);
+
+		Toast.makeText(this, "创建成功", 1).show();
+	}
+
+	/**
+	 * 查询常用号码
+	 * 
+	 * @param view
+	 */
+	public void commonNumberQuery(View view) {
+
+		ActivityUtil.startActivity(this, CommonNumberActivity.class);
 	}
 }
