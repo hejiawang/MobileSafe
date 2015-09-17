@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.TextView;
 
 import com.wang.mobilesafe.db.dao.CommonNumDao;
@@ -20,7 +23,7 @@ public class CommonNumberActivity extends Activity {
 	private ExpandableListView elv;
 	private MyAdapter adapter;
 
-	//使用内存缓存优化程序效率
+	// 使用内存缓存优化程序效率
 	private List<String> groupNames;
 	private Map<Integer, List<String>> childerCacheInfos;
 
@@ -34,6 +37,22 @@ public class CommonNumberActivity extends Activity {
 		elv = (ExpandableListView) findViewById(R.id.elv);
 		adapter = new MyAdapter();
 		elv.setAdapter(adapter);
+		elv.setOnChildClickListener(new OnChildClickListener() {
+
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+
+				String number = childerCacheInfos.get(groupPosition)
+						.get(childPosition).split("\n")[1];
+
+				Intent intent = new Intent();
+				intent.setAction(Intent.ACTION_DIAL);
+				intent.setData(Uri.parse("tel:" + number));
+				startActivity(intent);
+				return false;
+			}
+		});
 	}
 
 	private class MyAdapter extends BaseExpandableListAdapter {
@@ -123,7 +142,7 @@ public class CommonNumberActivity extends Activity {
 
 		@Override
 		public boolean isChildSelectable(int groupPosition, int childPosition) {
-			return false;
+			return true;
 		}
 	}
 }
