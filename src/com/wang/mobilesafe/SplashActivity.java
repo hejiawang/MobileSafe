@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -123,7 +124,6 @@ public class SplashActivity extends Activity {
 		//拷贝关键文件到系统目录,耗时操作,要新起线程
 		//1. 查询手机号码归属地的数据库文件
 		copyAddressDB();
-
 	}
 
 	/**
