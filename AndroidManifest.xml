@@ -81,7 +81,9 @@
             android:name=".DragViewActivity"
             android:theme="@style/Theme.Wallpaper" >
         </activity>
-        <activity android:name=".CallSmsSafeActivity" >
+        <activity
+            android:name=".CallSmsSafeActivity"
+            android:launchMode="singleTop" >
         </activity>
         <activity
             android:name=".EditBlackNumberActivity"
