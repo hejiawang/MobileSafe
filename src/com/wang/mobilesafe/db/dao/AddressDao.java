@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class AddressDao {
 
-	public static final String path = "/data/data/com.wang.mobilesafe/files/address.db";
+	private static final String path = "/data/data/com.wang.mobilesafe/files/address.db";
 
 	/**
 	 * 获取某个电话话码的归属地信息

@@ -41,15 +41,15 @@ public class SplashActivity extends Activity {
 	public static final int URL_ERROR = 13;
 	public static final int NETWORK_ERROR = 14;
 	private static final int DOWNLOAD_SUCCESS = 15;
-	private static final int DOWNLOAD_ERROR= 16;
+	private static final int DOWNLOAD_ERROR = 16;
 	private static final int COPY_ERROR = 17;
-	
+
 	protected static final String TAG = "SplashActivity";
 
 	private TextView tv_splash_version;
 	private UpdateInfo updateInfo;
-	
-	private ProgressDialog pd; //下载进度的对话框
+
+	private ProgressDialog pd; // 下载进度的对话框
 
 	private Handler handler = new Handler() {
 
@@ -92,7 +92,7 @@ public class SplashActivity extends Activity {
 				loadMainUI();
 				break;
 			case DOWNLOAD_SUCCESS:
-				File file = (File)msg.obj;
+				File file = (File) msg.obj;
 				installApk(file);
 				System.out.println("安装apk" + file.getAbsolutePath());
 				finish();
@@ -120,66 +120,111 @@ public class SplashActivity extends Activity {
 		AlphaAnimation aa = new AlphaAnimation(0.2f, 1.0f);
 		aa.setDuration(2000);
 		findViewById(R.id.rl_splash).startAnimation(aa);
-		
-		//拷贝关键文件到系统目录,耗时操作,要新起线程
-		//1. 查询手机号码归属地的数据库文件
+
+		// 拷贝关键文件到系统目录,耗时操作,要新起线程
+		// 1. 查询手机号码归属地的数据库文件
 		copyAddressDB();
+		// 2. 查询常用号码的数据库文件
+		copyCommonNumDB();
 	}
 
 	/**
-	 * 释放数据库文件到系统目录
+	 * 释放电话号码归属地数据库文件到系统目录
 	 */
-	private void copyAddressDB(){
-		
+	private void copyAddressDB() {
+
 		final File file = new File(getFilesDir(), "address.db");
-		if ( file.exists() && file.length()>0 ) {
-			//...
+		if (file.exists() && file.length() > 0) {
+			// ...
 		} else {
-			
-			new Thread(){
-				
+
+			new Thread() {
+
 				public void run() {
-					
+
 					Message msg = Message.obtain();
 					try {
-						
+
 						InputStream is = getAssets().open("address.db");
-						File f = CopyFileUtil.copyFile(is, file.getAbsolutePath());
-						if ( f != null ) {
-							//...
+						File f = CopyFileUtil.copyFile(is,
+								file.getAbsolutePath());
+						if (f != null) {
+							// ...
 						} else {
-							
+
 							msg.what = COPY_ERROR;
 						}
 					} catch (IOException e) {
-						
+
 						e.printStackTrace();
 						msg.what = COPY_ERROR;
 					} finally {
-						
+
 						handler.sendMessage(msg);
 					}
 				};
 			}.start();
 		}
 	}
-	
+
+	/**
+	 * 释放常用号码数据库文件到系统目录
+	 */
+	private void copyCommonNumDB() {
+
+		final File file = new File(getFilesDir(), "commonnum.db");
+		if (file.exists() && file.length() > 0) {
+			// ...
+		} else {
+
+			new Thread() {
+
+				public void run() {
+
+					Message msg = Message.obtain();
+					try {
+
+						InputStream is = getAssets().open("commonnum.db");
+						File f = CopyFileUtil.copyFile(is,
+								file.getAbsolutePath());
+						if (f != null) {
+							// ...
+						} else {
+
+							msg.what = COPY_ERROR;
+						}
+					} catch (IOException e) {
+
+						e.printStackTrace();
+						msg.what = COPY_ERROR;
+					} finally {
+
+						handler.sendMessage(msg);
+					}
+				};
+			}.start();
+		}
+	}
+
 	/**
 	 * 安装apk文件
-	 * @param file 要安装的apk文件
+	 * 
+	 * @param file
+	 *            要安装的apk文件
 	 */
-	private void installApk( File file ){
-		
+	private void installApk(File file) {
+
 		Intent intent = new Intent();
 		intent.setAction("android.intent.action.VIEW");
 		intent.addCategory("android.intent.category.DEFAULT");
-		//intent.setData(Uri.fromFile(file));
-		//intent.setType("application/vnd.android.package-archive");
-		intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-		
+		// intent.setData(Uri.fromFile(file));
+		// intent.setType("application/vnd.android.package-archive");
+		intent.setDataAndType(Uri.fromFile(file),
+				"application/vnd.android.package-archive");
+
 		startActivity(intent);
 	}
-	
+
 	/**
 	 * 自动升级的对话框提醒
 	 */
@@ -188,54 +233,58 @@ public class SplashActivity extends Activity {
 		AlertDialog.Builder builder = new Builder(this);
 		builder.setTitle("升级提醒");
 		builder.setMessage(updateInfo.getDescription());
-		
+
 		builder.setPositiveButton("确定", new OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				
-				//下载进度条设置
+
+				// 下载进度条设置
 				pd = new ProgressDialog(SplashActivity.this);
 				pd.setTitle("升级操作");
 				pd.setMessage("正在下载...");
 				pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 				pd.show();
-				
-				//在匿内部类中使用，要加final
+
+				// 在匿内部类中使用，要加final
 				final String apkUrl = updateInfo.getApkurl();
-				final File file = new File(Environment.getExternalStorageDirectory(), DownLoadUtil.getFileName(apkUrl));
-				
-				//存储路径在SD上，所以要先判断SD卡是否可用
-				if ( Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) ) {
-					
-					//下载文件
-					new Thread(){
-						
-						public void run(){
-							
-							//对于下载进度，当然是下载的方法最了解
-							File savedFile = DownLoadUtil.download(apkUrl, file.getAbsolutePath(), pd);
+				final File file = new File(Environment
+						.getExternalStorageDirectory(), DownLoadUtil
+						.getFileName(apkUrl));
+
+				// 存储路径在SD上，所以要先判断SD卡是否可用
+				if (Environment.getExternalStorageState().equals(
+						Environment.MEDIA_MOUNTED)) {
+
+					// 下载文件
+					new Thread() {
+
+						public void run() {
+
+							// 对于下载进度，当然是下载的方法最了解
+							File savedFile = DownLoadUtil.download(apkUrl,
+									file.getAbsolutePath(), pd);
 							Message msg = Message.obtain();
-							
-							if ( savedFile != null ) {
-								//下载成功
+
+							if (savedFile != null) {
+								// 下载成功
 								msg.what = DOWNLOAD_SUCCESS;
 								msg.obj = savedFile;
 							} else {
-								//下载失败
+								// 下载失败
 								msg.what = DOWNLOAD_ERROR;
 							}
-							
+
 							handler.sendMessage(msg);
-							//解散进度对话框
+							// 解散进度对话框
 							pd.dismiss();
 						}
 					}.start();
 				} else {
-					
+
 					Toast.makeText(getApplicationContext(), "SD卡不可用", 0).show();
 					loadMainUI();
-				} 
+				}
 			}
 		});
 
@@ -243,11 +292,11 @@ public class SplashActivity extends Activity {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				
+
 				loadMainUI();
 			}
 		});
-		
+
 		builder.show();
 	}
 
@@ -286,21 +335,20 @@ public class SplashActivity extends Activity {
 
 			SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
 			boolean isupdate = sp.getBoolean("update", true);
-			
-			//如果关闭自动更新。。。。。
-			if ( !isupdate ) {
-				
+
+			// 如果关闭自动更新。。。。。
+			if (!isupdate) {
+
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				
+
 				loadMainUI();
 				return;
 			}
-			
-			
+
 			long startTime = System.currentTimeMillis();
 
 			// obtain()返回一个已存在的Message，提高效率
@@ -312,8 +360,8 @@ public class SplashActivity extends Activity {
 				HttpURLConnection conn = (HttpURLConnection) url
 						.openConnection();
 				conn.setRequestMethod("GET");
-				//conn.setConnectTimeout(5000);
-				//为了测试速度，时间少点
+				// conn.setConnectTimeout(5000);
+				// 为了测试速度，时间少点
 				conn.setConnectTimeout(1500);
 
 				int code = conn.getResponseCode();

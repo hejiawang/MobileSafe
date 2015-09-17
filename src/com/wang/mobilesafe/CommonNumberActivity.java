@@ -1,5 +1,7 @@
 package com.wang.mobilesafe;
 
+import com.wang.mobilesafe.db.dao.CommonNumDao;
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,14 +30,16 @@ public class CommonNumberActivity extends Activity {
 
 	private class MyAdapter extends BaseExpandableListAdapter {
 
+		// 返回一共多少个分组
 		@Override
 		public int getGroupCount() {
-			return 10;
+			return CommonNumDao.getGroupCount();
 		}
 
+		// 每个分组有多少个孩子
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			return groupPosition + 1;
+			return CommonNumDao.getChildrenCount(groupPosition);
 		}
 
 		@Override
@@ -70,18 +74,19 @@ public class CommonNumberActivity extends Activity {
 			TextView tv = new TextView(getApplicationContext());
 			tv.setTextSize(25);
 			tv.setTextColor(Color.RED);
-			tv.setText("      我是第" + groupPosition + "个分组");
+			tv.setText("      " + CommonNumDao.getGroupName(groupPosition));
 			return tv;
 		}
 
 		@Override
 		public View getChildView(int groupPosition, int childPosition,
 				boolean isLastChild, View convertView, ViewGroup parent) {
-			
+
 			TextView tv = new TextView(getApplicationContext());
 			tv.setTextSize(18);
 			tv.setTextColor(Color.BLUE);
-			tv.setText("我是第" + groupPosition + "个分组的第"+ childPosition+"个孩子");
+			tv.setText(CommonNumDao.getChildInfoByPositon(groupPosition,
+					childPosition));
 			return tv;
 		}
 
