@@ -1,5 +1,8 @@
 package com.wang.mobilesafe.db.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -97,5 +100,51 @@ public class CommonNumDao {
 		cursor.close();
 		db.close();
 		return result;
+	}
+	
+	/**
+	 * 返回所有的分组信息
+	 * 
+	 * @return 分组信息
+	 */
+	public static List<String> getGroupInfos() {
+
+		List<String> names = new ArrayList<String>();
+		SQLiteDatabase db = SQLiteDatabase.openDatabase(path, null,
+				SQLiteDatabase.OPEN_READONLY);
+		Cursor cursor = db.rawQuery("select name from classlist", null);
+		while (cursor.moveToNext()) {
+
+			String name = cursor.getString(0);
+			names.add(name);
+		}
+		cursor.close();
+		db.close();
+		return names;
+	}
+	
+	/**
+	 * 返回某个分组里面有多少个孩子
+	 * 
+	 * @param groupPosition
+	 *            分组位置
+	 * @return 孩子数
+	 */
+	public static List<String> getChildrenInfosByPosition(int groupPosition) {
+	
+		List<String> childrenInfos = new ArrayList<String>();
+		int newPosition = groupPosition + 1;
+		String sql = "select name, number from table" + newPosition;
+		SQLiteDatabase db = SQLiteDatabase.openDatabase(path, null,
+				SQLiteDatabase.OPEN_READONLY);
+		Cursor cursor = db.rawQuery(sql, null);
+		while( cursor.moveToNext() ){
+			String name = cursor.getString(0);
+			String number = cursor.getString(1);
+			childrenInfos.add(name+"\n"+number);
+		}
+		cursor.close();
+		db.close();
+		return childrenInfos;
 	}
 }
