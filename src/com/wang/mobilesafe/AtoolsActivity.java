@@ -41,6 +41,8 @@ public class AtoolsActivity extends Activity {
 	
 		Intent intent = new Intent();
 		intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+		// 不允许重复创建
+		intent.putExtra("duplicate", false);
 		
 		Intent shortCutIntent = new Intent();
 		shortCutIntent.setAction("com.wang.xxx");
