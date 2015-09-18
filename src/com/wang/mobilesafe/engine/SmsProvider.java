@@ -93,4 +93,8 @@ public class SmsProvider {
 		os.flush();
 		os.close();
 	}
+	
+//	public void restoreSms(){
+		//读取备份的xml文件，把每一条短信的数据获取出来，插入到系统数据库
+//	}
 }
