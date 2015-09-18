@@ -99,7 +99,18 @@ public class AtoolsActivity extends Activity {
 					
 					try {
 						SmsProvider smsProvider = new SmsProvider( getApplicationContext());
-						smsProvider.backUpSms(params[0], pd);
+						smsProvider.backUpSms(params[0], new SmsProvider.BackUpProcessListener() {
+							
+							@Override
+							public void onProcessUpdate(int process) {
+								pd.setProgress(process);
+							}
+							
+							@Override
+							public void beforeBackUp(int max) {
+								pd.setMax(max);
+							}
+						});
 						return true;
 					} catch (Exception e) {
 						e.printStackTrace();

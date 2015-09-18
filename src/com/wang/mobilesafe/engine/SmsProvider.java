@@ -25,6 +25,11 @@ public class SmsProvider {
 		this.context = context;
 	}
 
+	public interface BackUpProcessListener{
+		void beforeBackUp(int max);
+		void onProcessUpdate(int process);
+	}
+	
 	/**
 	 * 短信备份
 	 * 
@@ -35,7 +40,7 @@ public class SmsProvider {
 	 * @throws Exception
 	 *             IOException
 	 */
-	public void backUpSms(OutputStream os, ProgressDialog pd) throws Exception {
+	public void backUpSms(OutputStream os, BackUpProcessListener listener) throws Exception {
 
 		XmlSerializer serializer = Xml.newSerializer();
 		serializer.setOutput(os, "utf-8");
@@ -46,7 +51,7 @@ public class SmsProvider {
 		ContentResolver resolver = context.getContentResolver();
 		Cursor cursor = resolver.query(uri, new String[] { "address", "date",
 				"type", "body" }, null, null, null);
-		pd.setMax(cursor.getCount());
+		listener.beforeBackUp(cursor.getCount());
 		int total = 0;
 		while (cursor.moveToNext()) {
 
@@ -77,7 +82,7 @@ public class SmsProvider {
 
 			os.flush();
 			total++;
-			pd.setProgress(total);
+			listener.onProcessUpdate(total);
 			
 			//方便测试
 			Thread.sleep(500);
