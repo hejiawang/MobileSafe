@@ -106,7 +106,7 @@ containing a value of this type.
         public static final int bt_normal_entry_ok=0x7f0c002d;
         public static final int bt_ok=0x7f0c0026;
         public static final int cb_setup4_satus=0x7f0c001b;
-        public static final int cb_status=0x7f0c0038;
+        public static final int cb_status=0x7f0c003c;
         public static final int ed_blacknumber=0x7f0c0021;
         public static final int ed_fiest_entry_pwd=0x7f0c0028;
         public static final int ed_fiest_entry_pwd_confirm=0x7f0c0029;
@@ -116,15 +116,16 @@ containing a value of this type.
         public static final int et_query_number=0x7f0c000e;
         public static final int et_safenumber=0x7f0c001a;
         public static final int gv_home=0x7f0c000b;
-        public static final int item_change_name=0x7f0c0039;
-        public static final int iv_callsms_delete=0x7f0c0033;
+        public static final int item_change_name=0x7f0c003d;
+        public static final int iv_app_icon=0x7f0c0031;
+        public static final int iv_callsms_delete=0x7f0c0037;
         public static final int iv_drag_view=0x7f0c0008;
         public static final int iv_home_icon=0x7f0c002f;
         public static final int iv_lostfind_status=0x7f0c000d;
         public static final int iv_setup2_bind=0x7f0c0019;
         public static final int iv_splash_logo=0x7f0c001d;
-        public static final int loading=0x7f0c0003;
-        public static final int lv_app_manager=0x7f0c0002;
+        public static final int loading=0x7f0c0002;
+        public static final int lv_app_manager=0x7f0c0003;
         public static final int lv_call_sms=0x7f0c0004;
         public static final int lv_select_contact=0x7f0c0010;
         public static final int rb_all=0x7f0c0023;
@@ -137,10 +138,13 @@ containing a value of this type.
         public static final int sv_setting_callsmsfirewall=0x7f0c0018;
         public static final int sv_setting_showaddress=0x7f0c0012;
         public static final int sv_setting_update=0x7f0c0011;
-        public static final int tv_call_sms_mode=0x7f0c0032;
-        public static final int tv_call_sms_number=0x7f0c0031;
-        public static final int tv_contact_name=0x7f0c0034;
-        public static final int tv_contact_phone=0x7f0c0035;
+        public static final int tv_app_location=0x7f0c0034;
+        public static final int tv_app_name=0x7f0c0032;
+        public static final int tv_app_version=0x7f0c0033;
+        public static final int tv_call_sms_mode=0x7f0c0036;
+        public static final int tv_call_sms_number=0x7f0c0035;
+        public static final int tv_contact_name=0x7f0c0038;
+        public static final int tv_contact_phone=0x7f0c0039;
         public static final int tv_drag_view=0x7f0c000a;
         public static final int tv_free_mem=0x7f0c0000;
         public static final int tv_free_sd=0x7f0c0001;
@@ -151,8 +155,8 @@ containing a value of this type.
         public static final int tv_setting_addressbg=0x7f0c0014;
         public static final int tv_setting_addressbg_color=0x7f0c0015;
         public static final int tv_setting_addressbg_location=0x7f0c0017;
-        public static final int tv_settingview_content=0x7f0c0037;
-        public static final int tv_settingview_title=0x7f0c0036;
+        public static final int tv_settingview_content=0x7f0c003b;
+        public static final int tv_settingview_title=0x7f0c003a;
         public static final int tv_splash_appname=0x7f0c001e;
         public static final int tv_splash_version=0x7f0c001f;
         public static final int tv_title_name=0x7f0c0020;
@@ -179,10 +183,11 @@ containing a value of this type.
         public static final int dialog_first_entry=0x7f030011;
         public static final int dialog_normal_entry=0x7f030012;
         public static final int grid_home_item=0x7f030013;
-        public static final int list_callsms_item=0x7f030014;
-        public static final int list_contact_item=0x7f030015;
-        public static final int ui_setting_view=0x7f030016;
-        public static final int ui_toast=0x7f030017;
+        public static final int list_app_item=0x7f030014;
+        public static final int list_callsms_item=0x7f030015;
+        public static final int list_contact_item=0x7f030016;
+        public static final int ui_setting_view=0x7f030017;
+        public static final int ui_toast=0x7f030018;
     }
     public static final class menu {
         public static final int lost_find_menu=0x7f0b0000;

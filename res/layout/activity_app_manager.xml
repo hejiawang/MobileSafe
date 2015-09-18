@@ -40,10 +40,34 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/listview_devider" />
 
-    <ListView
-        android:id="@+id/lv_app_manager"
+    <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-    </ListView>
+
+        <LinearLayout
+            android:id="@+id/loading"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible" >
+
+            <ProgressBar
+                style="@style/my_progress_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正在加载软件信息" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lv_app_manager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </ListView>
+    </FrameLayout>
 
 </LinearLayout>
