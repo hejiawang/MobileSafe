@@ -10,6 +10,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Xml;
+import android.widget.Toast;
 
 /**
  * 提供短信内容的类
@@ -25,11 +26,12 @@ public class SmsProvider {
 		this.context = context;
 	}
 
-	public interface BackUpProcessListener{
+	public interface BackUpProcessListener {
 		void beforeBackUp(int max);
+
 		void onProcessUpdate(int process);
 	}
-	
+
 	/**
 	 * 短信备份
 	 * 
@@ -40,7 +42,8 @@ public class SmsProvider {
 	 * @throws Exception
 	 *             IOException
 	 */
-	public void backUpSms(OutputStream os, BackUpProcessListener listener) throws Exception {
+	public void backUpSms(OutputStream os, BackUpProcessListener listener)
+			throws Exception {
 
 		XmlSerializer serializer = Xml.newSerializer();
 		serializer.setOutput(os, "utf-8");
@@ -83,8 +86,8 @@ public class SmsProvider {
 			os.flush();
 			total++;
 			listener.onProcessUpdate(total);
-			
-			//方便测试
+
+			// 方便测试
 			Thread.sleep(500);
 		}
 		cursor.close();
@@ -93,8 +96,12 @@ public class SmsProvider {
 		os.flush();
 		os.close();
 	}
-	
-//	public void restoreSms(){
-		//读取备份的xml文件，把每一条短信的数据获取出来，插入到系统数据库
-//	}
+
+	/**
+	 * 短信还原
+	 */
+	public void restoreSms() {
+		// 读取备份的xml文件，把每一条短信的数据获取出来，插入到系统数据库
+		Toast.makeText(context, "功能未实现", 1).show();
+	}
 }

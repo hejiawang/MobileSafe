@@ -84,10 +84,10 @@ public class AtoolsActivity extends Activity {
 	 */
 	public void backUpSms(View view) {
 
-		try {                    
+		try {
 			File file = new File(Environment.getExternalStorageDirectory(),
 					"smsbackup.xml");
-			if( !file.exists() ){
+			if (!file.exists()) {
 				file.createNewFile();
 			}
 			FileOutputStream fos = new FileOutputStream(file);
@@ -96,27 +96,29 @@ public class AtoolsActivity extends Activity {
 
 				@Override
 				protected Boolean doInBackground(OutputStream... params) {
-					
+
 					try {
-						SmsProvider smsProvider = new SmsProvider( getApplicationContext());
-						smsProvider.backUpSms(params[0], new SmsProvider.BackUpProcessListener() {
-							
-							@Override
-							public void onProcessUpdate(int process) {
-								pd.setProgress(process);
-							}
-							
-							@Override
-							public void beforeBackUp(int max) {
-								pd.setMax(max);
-							}
-						});
+						SmsProvider smsProvider = new SmsProvider(
+								getApplicationContext());
+						smsProvider.backUpSms(params[0],
+								new SmsProvider.BackUpProcessListener() {
+
+									@Override
+									public void onProcessUpdate(int process) {
+										pd.setProgress(process);
+									}
+
+									@Override
+									public void beforeBackUp(int max) {
+										pd.setMax(max);
+									}
+								});
 						return true;
 					} catch (Exception e) {
 						e.printStackTrace();
 						return false;
 					}
-					
+
 				}
 
 				@Override
@@ -132,13 +134,15 @@ public class AtoolsActivity extends Activity {
 
 				@Override
 				protected void onPostExecute(Boolean result) {
-					
+
 					super.onPostExecute(result);
 					pd.dismiss();
-					if ( result ) {
-						Toast.makeText(getApplicationContext(), "备份完成", 1).show();
+					if (result) {
+						Toast.makeText(getApplicationContext(), "备份完成", 1)
+								.show();
 					} else {
-						Toast.makeText(getApplicationContext(), "备份失败", 1).show();
+						Toast.makeText(getApplicationContext(), "备份失败", 1)
+								.show();
 					}
 				}
 
@@ -152,6 +156,15 @@ public class AtoolsActivity extends Activity {
 			e.printStackTrace();
 			Toast.makeText(getApplicationContext(), "备份失败", 1).show();
 		}
+	}
 
+	/**
+	 * 短信还原单击事件
+	 * 
+	 * @param view
+	 */
+	public void restoreSms(View view) {
+		SmsProvider smsProvider = new SmsProvider(getApplicationContext());
+		smsProvider.restoreSms();
 	}
 }
