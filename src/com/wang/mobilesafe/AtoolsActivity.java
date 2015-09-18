@@ -1,12 +1,20 @@
 package com.wang.mobilesafe;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Toast;
 
+import com.wang.mobilesafe.engine.SmsProvider;
 import com.wang.mobilesafe.utils.ActivityUtil;
 
 public class AtoolsActivity extends Activity {
@@ -65,5 +73,74 @@ public class AtoolsActivity extends Activity {
 	public void commonNumberQuery(View view) {
 
 		ActivityUtil.startActivity(this, CommonNumberActivity.class);
+	}
+
+	private ProgressDialog pd;
+
+	/**
+	 * 短信备份的单击事件
+	 * 
+	 * @param view
+	 */
+	public void backUpSms(View view) {
+
+		try {                    
+			File file = new File(Environment.getExternalStorageDirectory(),
+					"smsbackup.xml");
+			if( !file.exists() ){
+				file.createNewFile();
+			}
+			FileOutputStream fos = new FileOutputStream(file);
+
+			new AsyncTask<OutputStream, Integer, Boolean>() {
+
+				@Override
+				protected Boolean doInBackground(OutputStream... params) {
+					
+					try {
+						SmsProvider smsProvider = new SmsProvider( getApplicationContext());
+						smsProvider.backUpSms(params[0], pd);
+						return true;
+					} catch (Exception e) {
+						e.printStackTrace();
+						return false;
+					}
+					
+				}
+
+				@Override
+				protected void onPreExecute() {
+
+					super.onPreExecute();
+					pd = new ProgressDialog(AtoolsActivity.this);
+					pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+					pd.setTitle("提示:");
+					pd.setMessage("正在备份短信...");
+					pd.show();
+				}
+
+				@Override
+				protected void onPostExecute(Boolean result) {
+					
+					super.onPostExecute(result);
+					pd.dismiss();
+					if ( result ) {
+						Toast.makeText(getApplicationContext(), "备份完成", 1).show();
+					} else {
+						Toast.makeText(getApplicationContext(), "备份失败", 1).show();
+					}
+				}
+
+				@Override
+				protected void onProgressUpdate(Integer... values) {
+					super.onProgressUpdate(values);
+				}
+
+			}.execute(fos);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Toast.makeText(getApplicationContext(), "备份失败", 1).show();
+		}
+
 	}
 }
