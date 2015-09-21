@@ -63,11 +63,21 @@
                 android:text="正在加载软件信息" />
         </LinearLayout>
 
-        <ListView
+        <!-- 注意下面两个View的顺序 -->
+        <ListView
             android:id="@+id/lv_app_manager"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
         </ListView>
+
+        <TextView
+            android:id="@+id/tv_appmanager_status"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:text="用户程序"
+            android:textColor="#ff0000ff"
+            android:textSize="18dip" />
     </FrameLayout>
 
 </LinearLayout>
