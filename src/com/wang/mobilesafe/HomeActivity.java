@@ -78,6 +78,10 @@ public class HomeActivity extends Activity implements OnClickListener {
 					intent = new Intent(HomeActivity.this, AppManagerActivity.class);
 					startActivity(intent);
 					break;
+				case 3:
+					intent = new Intent(HomeActivity.this, TaskManagerActivity.class);
+					startActivity(intent);
+					break;
 				case 7:
 					intent = new Intent(HomeActivity.this, AtoolsActivity.class);
 					startActivity(intent);
