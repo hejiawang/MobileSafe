@@ -11,6 +11,43 @@ public class AppInfo {
 	private boolean inRom;
 	private boolean userApp;
 
+	private boolean useSms;
+	private boolean useGps;
+	private boolean useContact;
+	private boolean useNet;
+
+	public boolean isUseSms() {
+		return useSms;
+	}
+
+	public void setUseSms(boolean useSms) {
+		this.useSms = useSms;
+	}
+
+	public boolean isUseGps() {
+		return useGps;
+	}
+
+	public void setUseGps(boolean useGps) {
+		this.useGps = useGps;
+	}
+
+	public boolean isUseContact() {
+		return useContact;
+	}
+
+	public void setUseContact(boolean useContact) {
+		this.useContact = useContact;
+	}
+
+	public boolean isUseNet() {
+		return useNet;
+	}
+
+	public void setUseNet(boolean useNet) {
+		this.useNet = useNet;
+	}
+
 	public String getAppName() {
 		return appName;
 	}

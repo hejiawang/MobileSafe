@@ -30,7 +30,8 @@ public class AppInfoProvider {
 
 		List<AppInfo> appInfos = new ArrayList<AppInfo>();
 		PackageManager pm = context.getPackageManager();
-		List<PackageInfo> packInfos = pm.getInstalledPackages(0);
+		List<PackageInfo> packInfos = pm
+				.getInstalledPackages(PackageManager.GET_PERMISSIONS);
 		for (PackageInfo packInfo : packInfos) {
 
 			AppInfo appInfo = new AppInfo();
@@ -57,6 +58,23 @@ public class AppInfoProvider {
 				appInfo.setInRom(true); // 存储在手机内存
 			} else {
 				appInfo.setInRom(false); // 存储在SD卡上
+			}
+
+			String[] permissions = packInfo.requestedPermissions;
+			if (permissions != null && permissions.length > 0) {
+				for (String permission : permissions) {
+					if ("android.permission.INTERNET".equals(permission)) {
+						appInfo.setUseNet(true);
+					} else if ("android.permission.READ_CONTACTS"
+							.equals(permission)) {
+						appInfo.setUseContact(true);
+					} else if ("android.permission.SEND_SMS".equals(permission)) {
+						appInfo.setUseSms(true);
+					} else if ("android.permission.ACCESS_FINE_LOCATION"
+							.equals(permission)) {
+						appInfo.setUseGps(true);
+					}
+				}
 			}
 
 			appInfos.add(appInfo);

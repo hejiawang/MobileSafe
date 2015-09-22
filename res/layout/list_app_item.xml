@@ -20,15 +20,6 @@
         android:textColor="#000000" />
 
     <TextView
-        android:id="@+id/tv_app_version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:text="version"
-        android:textColor="#88000000" />
-
-    <TextView
         android:id="@+id/tv_app_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,11 +28,29 @@
         android:text="location"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#88000000" />
-    
-     <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dip"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/listview_devider" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dip"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/listview_devider" />
+
+    <TextView
+        android:id="@+id/tv_app_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/tv_app_location"
+        android:text="version"
+        android:textColor="#88000000" />
+
+    <LinearLayout
+        android:id="@+id/ll_appstatus_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal" >
+    </LinearLayout>
 
 </RelativeLayout>

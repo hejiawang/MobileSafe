@@ -1,16 +1,13 @@
 package com.wang.mobilesafe;
 
-import java.nio.channels.SelectableChannel;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.ActivityGroup;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -366,6 +363,8 @@ public class AppManagerActivity extends Activity implements OnClickListener {
 						.findViewById(R.id.tv_app_version);
 				holder.iv_app_icon = (ImageView) view
 						.findViewById(R.id.iv_app_icon);
+				holder.ll_appstatus_container = (LinearLayout) view
+						.findViewById(R.id.ll_appstatus_container);
 				view.setTag(holder);
 			}
 
@@ -401,6 +400,28 @@ public class AppManagerActivity extends Activity implements OnClickListener {
 			} else {
 				holder.tv_app_location.setText("外部内存" + appInfo.isUserApp());
 			}
+			//清空前一个的图标
+			holder.ll_appstatus_container.removeAllViews();
+			if (appInfo.isUseContact()) {
+				ImageView iv = new ImageView(getApplicationContext());
+				iv.setImageResource(R.drawable.contact);
+				holder.ll_appstatus_container.addView(iv, 60, 60);
+			}
+			if (appInfo.isUseSms()) {
+				ImageView iv = new ImageView(getApplicationContext());
+				iv.setImageResource(R.drawable.sms);
+				holder.ll_appstatus_container.addView(iv, 60, 60);
+			}
+			if (appInfo.isUseNet()) {
+				ImageView iv = new ImageView(getApplicationContext());
+				iv.setImageResource(R.drawable.net);
+				holder.ll_appstatus_container.addView(iv, 60, 60);
+			}
+			if (appInfo.isUseGps()) {
+				ImageView iv = new ImageView(getApplicationContext());
+				iv.setImageResource(R.drawable.gps);
+				holder.ll_appstatus_container.addView(iv, 60, 60);
+			}
 			return view;
 		}
 	}
@@ -410,5 +431,6 @@ public class AppManagerActivity extends Activity implements OnClickListener {
 		TextView tv_app_location;
 		TextView tv_app_version;
 		ImageView iv_app_icon;
+		LinearLayout ll_appstatus_container;
 	}
 }
