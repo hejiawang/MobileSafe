@@ -179,13 +179,13 @@ public class AppManagerActivity extends Activity implements OnClickListener {
 			} else {
 				Toast.makeText(this, "系统级程序，不能卸载", 0).show();
 			}
-
 			break;
 		case R.id.ll_start:
 			Log.i(TAG, "启动" + selectedAppInfo.getAppName());
 			break;
 		case R.id.ll_share:
 			Log.i(TAG, "分享" + selectedAppInfo.getAppName());
+			shareApk();
 			break;
 		}
 		dismissPopupWindow();
@@ -212,6 +212,19 @@ public class AppManagerActivity extends Activity implements OnClickListener {
 		intent.addCategory("android.intent.category.DEFAULT");
 		intent.setData(Uri.parse("package:" + selectedAppInfo.getPackName()));
 		startActivityForResult(intent, 10);
+	}
+	
+	/**
+	 * 分享软件
+	 */
+	private void shareApk(){
+		
+		Intent intent = new Intent();
+		intent.setAction("android.intent.action.SEND");
+		intent.addCategory("android.intent.category.DEFAULT");
+		intent.setType("text/plain");
+		intent.putExtra(Intent.EXTRA_TEXT, "share a applitaion"+selectedAppInfo.getAppName());
+		startActivity(intent);
 	}
 
 	/**
