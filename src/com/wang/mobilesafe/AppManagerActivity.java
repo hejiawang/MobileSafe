@@ -5,7 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.ActivityGroup;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -182,6 +187,7 @@ public class AppManagerActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.ll_start:
 			Log.i(TAG, "启动" + selectedAppInfo.getAppName());
+			startApk();
 			break;
 		case R.id.ll_share:
 			Log.i(TAG, "分享" + selectedAppInfo.getAppName());
@@ -213,18 +219,45 @@ public class AppManagerActivity extends Activity implements OnClickListener {
 		intent.setData(Uri.parse("package:" + selectedAppInfo.getPackName()));
 		startActivityForResult(intent, 10);
 	}
-	
+
 	/**
 	 * 分享软件
 	 */
-	private void shareApk(){
-		
+	private void shareApk() {
+
 		Intent intent = new Intent();
 		intent.setAction("android.intent.action.SEND");
 		intent.addCategory("android.intent.category.DEFAULT");
 		intent.setType("text/plain");
-		intent.putExtra(Intent.EXTRA_TEXT, "share a applitaion"+selectedAppInfo.getAppName());
+		intent.putExtra(Intent.EXTRA_TEXT, "share a applitaion"
+				+ selectedAppInfo.getAppName());
 		startActivity(intent);
+	}
+
+	/**
+	 * 启动软件
+	 */
+	private void startApk() {
+
+		// 开启这个应用程序里面的第一个activity
+		String packName = selectedAppInfo.getPackName();
+		try {
+			PackageInfo packInfo = getPackageManager().getPackageInfo(packName,
+					PackageManager.GET_ACTIVITIES);
+			ActivityInfo[] activityInfos = packInfo.activities;
+			if (activityInfos != null && activityInfos.length > 0) {
+				ActivityInfo activityInfo = activityInfos[0];
+				String className = activityInfo.name;
+				Intent intent = new Intent();
+				intent.setClassName(packName, className);
+				startActivity(intent);
+			} else {
+				Toast.makeText(this, "无法启动应用程序!!!", 0).show();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Toast.makeText(this, "无法启动应用程序", 0).show();
+		}
 	}
 
 	/**
