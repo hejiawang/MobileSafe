@@ -5,14 +5,24 @@ import java.util.List;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +33,8 @@ import com.wang.mobilesafe.utils.MyAsyncTask;
 
 public class AppManagerActivity extends Activity {
 
+	private static final String TAG = "AppManagerActivity";
+
 	private TextView tv_free_mem;
 	private TextView tv_free_sd;
 	private ListView lv_app_manager;
@@ -32,6 +44,8 @@ public class AppManagerActivity extends Activity {
 	private List<AppInfo> appInfos;
 	private List<AppInfo> userAppInfos;
 	private List<AppInfo> systemAppInfos;
+
+	private PopupWindow popwindow;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +62,55 @@ public class AppManagerActivity extends Activity {
 		tv_free_sd.setText("可用SD卡:" + AvailSDAndERomUtil.getAvailSD(this));
 		tv_free_mem.setText("可用内存:" + AvailSDAndERomUtil.getAvailRom(this));
 
+		lv_app_manager.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				Object obj = lv_app_manager.getItemAtPosition(position);
+				if (obj instanceof AppInfo) {
+
+					// 如果当前界面存在了弹出窗体，关闭它。
+					dismissPopupWindow();
+
+					AppInfo appInfo = (AppInfo) obj;
+					// Log.i(TAG, "packname:" + appInfo.getPackName());
+
+					View contentView = View.inflate(getApplicationContext(),
+							R.layout.ui_popupwindow_app, null);
+
+					popwindow = new PopupWindow(contentView,
+							ViewGroup.LayoutParams.WRAP_CONTENT,
+							ViewGroup.LayoutParams.WRAP_CONTENT);
+					popwindow.setBackgroundDrawable(new ColorDrawable(
+							Color.TRANSPARENT));
+
+					int[] location = new int[2];
+					view.getLocationInWindow(location);
+					popwindow.showAtLocation(parent,
+							Gravity.TOP | Gravity.LEFT, location[0] + 120,
+							location[1]);
+
+					// 弹出popupwindow的动画效果.
+					ScaleAnimation sa = new ScaleAnimation(0.2f, 1.0f, 0.2f,
+							1.0f, 0.5f, 0.5f);
+					sa.setDuration(600);
+					TranslateAnimation ta = new TranslateAnimation(
+							Animation.RELATIVE_TO_SELF, 0,
+							Animation.RELATIVE_TO_SELF, 0.1f,
+							Animation.RELATIVE_TO_SELF, 0,
+							Animation.RELATIVE_TO_SELF, 0);
+					ta.setDuration(600);
+					AnimationSet set = new AnimationSet(false);
+					set.addAnimation(sa);
+					set.addAnimation(ta);
+					contentView.startAnimation(set);
+				}
+			}
+
+		});
+
 		lv_app_manager.setOnScrollListener(new OnScrollListener() {
 
 			@Override
@@ -59,6 +122,9 @@ public class AppManagerActivity extends Activity {
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
 
+				// 如果当前界面存在了弹出窗体，关闭它。
+				dismissPopupWindow();
+
 				if (userAppInfos != null && systemAppInfos != null) {
 					if (firstVisibleItem >= (userAppInfos.size() + 1)) {
 						tv_appmanager_status.setText("系统程序("
@@ -68,12 +134,12 @@ public class AppManagerActivity extends Activity {
 								+ userAppInfos.size() + ")");
 					}
 				}
-//				int[] location = new int[2];
-//				View topView = lv_app_manager.getChildAt(0);
-//				if (topView != null) {
-//					topView.getLocationInWindow(location);
-//					System.out.println("y=" + location[1]);
-//				}
+				// int[] location = new int[2];
+				// View topView = lv_app_manager.getChildAt(0);
+				// if (topView != null) {
+				// topView.getLocationInWindow(location);
+				// System.out.println("y=" + location[1]);
+				// }
 			}
 		});
 
@@ -108,7 +174,27 @@ public class AppManagerActivity extends Activity {
 		}.execute();
 	}
 
+	/**
+	 * 使弹出窗体消失.
+	 */
+	private void dismissPopupWindow() {
+		if (popwindow != null && popwindow.isShowing()) {
+			popwindow.dismiss();
+			popwindow = null;
+		}
+	}
+
 	private class AppInfoAdapter extends BaseAdapter {
+
+		@Override
+		public boolean isEnabled(int position) {
+			if (position == 0) {
+				return false;
+			} else if (position == userAppInfos.size() + 1) {
+				return false;
+			}
+			return super.isEnabled(position);
+		}
 
 		@Override
 		public int getCount() {
@@ -117,12 +203,23 @@ public class AppManagerActivity extends Activity {
 
 		@Override
 		public Object getItem(int position) {
-			return null;
+
+			if (position == 0) {
+				return position;
+			} else if (position == userAppInfos.size() + 1) {
+				return position;
+			} else if (position <= userAppInfos.size()) { // 用户程序
+				int newPosition = position - 1;
+				return userAppInfos.get(newPosition);
+			} else { // 系统程序
+				int newPosition = position - userAppInfos.size() - 2;
+				return systemAppInfos.get(newPosition);
+			}
 		}
 
 		@Override
 		public long getItemId(int position) {
-			return 0;
+			return position;
 		}
 
 		@Override
