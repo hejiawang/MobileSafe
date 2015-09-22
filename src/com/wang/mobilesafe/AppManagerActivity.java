@@ -1,15 +1,19 @@
 package com.wang.mobilesafe;
 
+import java.nio.channels.SelectableChannel;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Animatable;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -21,17 +25,19 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wang.mobilesafe.domain.AppInfo;
 import com.wang.mobilesafe.engine.AppInfoProvider;
 import com.wang.mobilesafe.utils.AvailSDAndERomUtil;
 import com.wang.mobilesafe.utils.MyAsyncTask;
 
-public class AppManagerActivity extends Activity {
+public class AppManagerActivity extends Activity implements OnClickListener {
 
 	private static final String TAG = "AppManagerActivity";
 
@@ -40,12 +46,17 @@ public class AppManagerActivity extends Activity {
 	private ListView lv_app_manager;
 	private View loading;
 	private TextView tv_appmanager_status;
+	private LinearLayout ll_uninstall;
+	private LinearLayout ll_start;
+	private LinearLayout ll_share;
 
 	private List<AppInfo> appInfos;
 	private List<AppInfo> userAppInfos;
 	private List<AppInfo> systemAppInfos;
 
 	private PopupWindow popwindow;
+
+	private AppInfo selectedAppInfo; // 被点击条目的appInfo对象
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +85,21 @@ public class AppManagerActivity extends Activity {
 					// 如果当前界面存在了弹出窗体，关闭它。
 					dismissPopupWindow();
 
-					AppInfo appInfo = (AppInfo) obj;
+					selectedAppInfo = (AppInfo) obj;
 					// Log.i(TAG, "packname:" + appInfo.getPackName());
 
 					View contentView = View.inflate(getApplicationContext(),
 							R.layout.ui_popupwindow_app, null);
+					ll_uninstall = (LinearLayout) contentView
+							.findViewById(R.id.ll_uninstall);
+					ll_start = (LinearLayout) contentView
+							.findViewById(R.id.ll_start);
+					ll_share = (LinearLayout) contentView
+							.findViewById(R.id.ll_share);
+
+					ll_uninstall.setOnClickListener(AppManagerActivity.this);
+					ll_start.setOnClickListener(AppManagerActivity.this);
+					ll_share.setOnClickListener(AppManagerActivity.this);
 
 					popwindow = new PopupWindow(contentView,
 							ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -143,6 +164,70 @@ public class AppManagerActivity extends Activity {
 			}
 		});
 
+		fillData();
+	}
+
+	@Override
+	public void onClick(View v) {
+
+		switch (v.getId()) {
+		case R.id.ll_uninstall:
+			Log.i(TAG, "卸载" + selectedAppInfo.getAppName());
+			// 如果应用程序是系统级的，提示用户，不能卸载
+			if (selectedAppInfo.isUserApp()) {
+				uninstallApk();
+			} else {
+				Toast.makeText(this, "系统级程序，不能卸载", 0).show();
+			}
+
+			break;
+		case R.id.ll_start:
+			Log.i(TAG, "启动" + selectedAppInfo.getAppName());
+			break;
+		case R.id.ll_share:
+			Log.i(TAG, "分享" + selectedAppInfo.getAppName());
+			break;
+		}
+		dismissPopupWindow();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (requestCode == 10) {
+			// 刷新数据
+			fillData();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	/**
+	 * 卸载软件
+	 */
+	private void uninstallApk() {
+
+		Intent intent = new Intent();
+		intent.setAction("android.intent.action.VIEW");
+		intent.setAction("android.intent.action.DELETE");
+		intent.addCategory("android.intent.category.DEFAULT");
+		intent.setData(Uri.parse("package:" + selectedAppInfo.getPackName()));
+		startActivityForResult(intent, 10);
+	}
+
+	/**
+	 * 使弹出窗体消失.
+	 */
+	private void dismissPopupWindow() {
+		if (popwindow != null && popwindow.isShowing()) {
+			popwindow.dismiss();
+			popwindow = null;
+		}
+	}
+
+	/**
+	 * 向listView中填充数据
+	 */
+	private void fillData() {
 		new MyAsyncTask() {
 
 			@Override
@@ -172,16 +257,6 @@ public class AppManagerActivity extends Activity {
 
 			}
 		}.execute();
-	}
-
-	/**
-	 * 使弹出窗体消失.
-	 */
-	private void dismissPopupWindow() {
-		if (popwindow != null && popwindow.isShowing()) {
-			popwindow.dismiss();
-			popwindow = null;
-		}
 	}
 
 	private class AppInfoAdapter extends BaseAdapter {
