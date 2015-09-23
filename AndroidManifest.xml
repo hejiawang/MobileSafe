@@ -121,6 +121,8 @@
         </service>
         <service android:name=".service.CallSmsFireWallSerivce" >
         </service>
+        <service android:name=".service.AutoKillService" >
+        </service>
 
         <receiver android:name=".receiver.OutCallReceiver" >
             <intent-filter android:priority="1000" >
