@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:mobilesafe="http://schemas.android.com/apk/res/com.wang.mobilesafe"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:background="#355E9E"
+        android:gravity="center"
+        android:text="进程管理设置"
+        android:textColor="#EBC950"
+        android:textSize="23dip" />
+
+    <CheckBox
+        android:id="@+id/cb_task_setting_showsystem"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="显示系统进程" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dip"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/listview_devider" />
+	
+    <com.wang.mobilesafe.ui.SettingView
+        android:id="@+id/sv_task_setting_autokill"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        mobilesafe:checked_text="自动清理内存已经开启"
+        mobilesafe:title="自动清理内存"
+        mobilesafe:unchecked_text="自动清理内存没有开启" >
+    </com.wang.mobilesafe.ui.SettingView>
+</LinearLayout>

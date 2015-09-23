@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.Formatter;
@@ -19,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wang.mobilesafe.domain.TaskInfo;
 import com.wang.mobilesafe.engine.TaskInfoProvider;
@@ -45,6 +46,8 @@ public class TaskManagerActivity extends Activity {
 
 	private TaskAdapter taskAdapter;
 
+	private SharedPreferences sp;
+
 	private boolean selectAll;
 
 	@Override
@@ -52,6 +55,8 @@ public class TaskManagerActivity extends Activity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_manager);
+
+		sp = getSharedPreferences("config", MODE_PRIVATE);
 
 		tv_task_count = (TextView) findViewById(R.id.tv_task_count);
 		tv_mem_info = (TextView) findViewById(R.id.tv_mem_info);
@@ -157,10 +162,11 @@ public class TaskManagerActivity extends Activity {
 			}
 		}
 		String memStr = Formatter.formatFileSize(this, savedMem);
-//		Toast.makeText(this, "杀死了" + count + "个进程,共释放" + memStr + "内存", 0)
-//				.show();
-		//使用自定义toast
-		MyToast.show(R.drawable.notification, "杀死了" + count + "个进程,共释放" + memStr + "内存", this);
+		// Toast.makeText(this, "杀死了" + count + "个进程,共释放" + memStr + "内存", 0)
+		// .show();
+		// 使用自定义toast
+		MyToast.show(R.drawable.notification, "杀死了" + count + "个进程,共释放"
+				+ memStr + "内存", this);
 		// 把杀死的条目从界面移除
 		for (TaskInfo taskInfo : killedTasks) {
 			if (taskInfo.isUserTask()) {
@@ -176,15 +182,6 @@ public class TaskManagerActivity extends Activity {
 		tv_mem_info.setText("可用/总内存:"
 				+ Formatter.formatFileSize(this, availRom) + "/"
 				+ Formatter.formatFileSize(this, totalRom));
-	}
-
-	/**
-	 * 设置的单击事件
-	 * 
-	 * @param view
-	 */
-	public void setting(View view) {
-
 	}
 
 	/**
@@ -220,11 +217,36 @@ public class TaskManagerActivity extends Activity {
 		}
 	}
 
+	/**
+	 * 设置的单击事件
+	 * 
+	 * @param view
+	 */
+	public void setting(View view) {
+		Intent intent = new Intent(this, TaskSettingActivity.class);
+		startActivityForResult(intent, 0);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == 200) {
+			taskAdapter.notifyDataSetChanged();
+		}
+	}
+
 	private class TaskAdapter extends BaseAdapter {
 
 		@Override
 		public int getCount() {
-			return userTaskInfos.size() + systemTaskInfos.size() + 2;
+
+			boolean showsystem = sp.getBoolean("showsystem", false);
+			if (showsystem) {
+				return userTaskInfos.size() + systemTaskInfos.size() + 2;
+			} else {
+				return userTaskInfos.size() + 1;
+			}
 		}
 
 		@Override

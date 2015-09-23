@@ -42,7 +42,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
     <application
         android:name="MobileSafeApplication"
@@ -113,6 +113,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".TaskManagerActivity" >
+        </activity>
+        <activity android:name=".TaskSettingActivity" >
         </activity>
 
         <service android:name=".service.ShowLocationService" >
