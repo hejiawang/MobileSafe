@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.wang.mobilesafe.domain.TaskInfo;
 import com.wang.mobilesafe.engine.TaskInfoProvider;
+import com.wang.mobilesafe.ui.MyToast;
 import com.wang.mobilesafe.utils.MyAsyncTask;
 import com.wang.mobilesafe.utils.TaskUtil;
 
@@ -156,8 +157,10 @@ public class TaskManagerActivity extends Activity {
 			}
 		}
 		String memStr = Formatter.formatFileSize(this, savedMem);
-		Toast.makeText(this, "杀死了" + count + "个进程,共释放" + memStr + "内存", 0)
-				.show();
+//		Toast.makeText(this, "杀死了" + count + "个进程,共释放" + memStr + "内存", 0)
+//				.show();
+		//使用自定义toast
+		MyToast.show(R.drawable.notification, "杀死了" + count + "个进程,共释放" + memStr + "内存", this);
 		// 把杀死的条目从界面移除
 		for (TaskInfo taskInfo : killedTasks) {
 			if (taskInfo.isUserTask()) {

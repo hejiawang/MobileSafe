@@ -115,7 +115,7 @@ containing a value of this type.
         public static final int bt_ok=0x7f0c002b;
         public static final int bt_select_all=0x7f0c0024;
         public static final int cb_setup4_satus=0x7f0c001c;
-        public static final int cb_status=0x7f0c0049;
+        public static final int cb_status=0x7f0c004b;
         public static final int cb_task_status=0x7f0c0043;
         public static final int ed_blacknumber=0x7f0c0026;
         public static final int ed_fiest_entry_pwd=0x7f0c002d;
@@ -126,7 +126,7 @@ containing a value of this type.
         public static final int et_query_number=0x7f0c000f;
         public static final int et_safenumber=0x7f0c001b;
         public static final int gv_home=0x7f0c000c;
-        public static final int item_change_name=0x7f0c004a;
+        public static final int item_change_name=0x7f0c004c;
         public static final int iv_app_icon=0x7f0c0036;
         public static final int iv_callsms_delete=0x7f0c003d;
         public static final int iv_drag_view=0x7f0c0009;
@@ -136,9 +136,9 @@ containing a value of this type.
         public static final int iv_splash_logo=0x7f0c001e;
         public static final int iv_task_icon=0x7f0c0040;
         public static final int ll_appstatus_container=0x7f0c003a;
-        public static final int ll_share=0x7f0c0046;
-        public static final int ll_start=0x7f0c0045;
-        public static final int ll_uninstall=0x7f0c0044;
+        public static final int ll_share=0x7f0c0048;
+        public static final int ll_start=0x7f0c0047;
+        public static final int ll_uninstall=0x7f0c0046;
         public static final int loading=0x7f0c0002;
         public static final int lv_app_manager=0x7f0c0003;
         public static final int lv_call_sms=0x7f0c0005;
@@ -173,8 +173,8 @@ containing a value of this type.
         public static final int tv_setting_addressbg=0x7f0c0015;
         public static final int tv_setting_addressbg_color=0x7f0c0016;
         public static final int tv_setting_addressbg_location=0x7f0c0018;
-        public static final int tv_settingview_content=0x7f0c0048;
-        public static final int tv_settingview_title=0x7f0c0047;
+        public static final int tv_settingview_content=0x7f0c004a;
+        public static final int tv_settingview_title=0x7f0c0049;
         public static final int tv_splash_appname=0x7f0c001f;
         public static final int tv_splash_version=0x7f0c0020;
         public static final int tv_task_count=0x7f0c0021;
@@ -182,6 +182,8 @@ containing a value of this type.
         public static final int tv_task_name=0x7f0c0041;
         public static final int tv_title_name=0x7f0c0025;
         public static final int tv_toast_address=0x7f0c000a;
+        public static final int tv_toast_icon=0x7f0c0044;
+        public static final int tv_toast_msg=0x7f0c0045;
     }
     public static final class layout {
         public static final int activity_app_manager=0x7f030000;
@@ -209,9 +211,10 @@ containing a value of this type.
         public static final int list_callsms_item=0x7f030016;
         public static final int list_contact_item=0x7f030017;
         public static final int list_task_item=0x7f030018;
-        public static final int ui_popupwindow_app=0x7f030019;
-        public static final int ui_setting_view=0x7f03001a;
-        public static final int ui_toast=0x7f03001b;
+        public static final int my_toast=0x7f030019;
+        public static final int ui_popupwindow_app=0x7f03001a;
+        public static final int ui_setting_view=0x7f03001b;
+        public static final int ui_toast=0x7f03001c;
     }
     public static final class menu {
         public static final int lost_find_menu=0x7f0b0000;
