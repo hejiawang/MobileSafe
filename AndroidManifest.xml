@@ -123,6 +123,8 @@
         </service>
         <service android:name=".service.AutoKillService" >
         </service>
+        <service android:name=".service.UpdateWidgetService" >
+        </service>
 
         <receiver android:name=".receiver.OutCallReceiver" >
             <intent-filter android:priority="1000" >
@@ -150,6 +152,20 @@
 
             <intent-filter android:priority="1000" >
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receiver.MyWidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/example_appwidget_info" />
+        </receiver>
+        <receiver android:name=".receiver.MyKillProcessReceiver" >
+            <intent-filter>
+                <action android:name="com.wang.killbgprocess" />
             </intent-filter>
         </receiver>
     </application>
