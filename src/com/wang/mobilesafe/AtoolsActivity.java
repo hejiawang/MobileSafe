@@ -167,4 +167,13 @@ public class AtoolsActivity extends Activity {
 		SmsProvider smsProvider = new SmsProvider(getApplicationContext());
 		smsProvider.restoreSms();
 	}
+
+	/**
+	 * 程序锁的单击事件
+	 * 
+	 * @param view
+	 */
+	public void appLock(View view) {
+		ActivityUtil.startActivity(this, AppLockActiviry.class);
+	}
 }
