@@ -68,7 +68,6 @@ public class WatchDogService extends Service {
 					RunningTaskInfo taskInfo = infos.get(0); // 最新打开的任务栈
 					ComponentName topActivity = taskInfo.topActivity; // 得到栈顶的activity
 					String packName = topActivity.getPackageName();
-					Log.i(TAG, "packName : " + packName);
 					if (dao.find(packName)) {
 						// 如果打开的这个软件是受保护的...
 						// 判断当前包名是否要临时取消保护

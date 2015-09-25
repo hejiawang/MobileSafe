@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 public class EnterPasswordActivity extends Activity {
 
+	private static final String TAG = "EnterPasswordActivity";
 	private TextView tv_name;
 	private ImageView iv_icon;
 	private EditText et_password;
@@ -52,6 +54,7 @@ public class EnterPasswordActivity extends Activity {
 
 		// 按返回键直接回到桌面
 		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+			Log.i(TAG, "KEYCODE_BACK");
 			Intent intent = new Intent();
 			intent.setAction("android.intent.action.MAIN");
 			intent.addCategory("android.intent.category.HOME");
@@ -75,7 +78,7 @@ public class EnterPasswordActivity extends Activity {
 		String password = et_password.getText().toString().trim();
 		if ("123".equals(password)) {
 			finish();
-			//发出一个自定义广播，临时取消程序的保护，
+			// 发出一个自定义广播，临时取消程序的保护，
 			Intent intent = new Intent();
 			intent.setAction("com.wang.stopprotect");
 			intent.putExtra("stoppackname", packname);

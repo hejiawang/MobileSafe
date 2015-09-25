@@ -43,7 +43,7 @@
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:name="MobileSafeApplication"
@@ -119,7 +119,10 @@
         </activity>
         <activity android:name=".AppLockActiviry" >
         </activity>
-        <activity android:name=".EnterPasswordActivity" >
+        <activity
+            android:name=".EnterPasswordActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance" >
         </activity>
 
         <service android:name=".service.ShowLocationService" >
