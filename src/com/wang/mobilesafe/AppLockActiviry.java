@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,6 +52,10 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 
 	private AppLockDao dao;
 
+	private PopupWindow popwindow;
+
+	private boolean removingFlag;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -55,6 +63,10 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_applock);
 
 		dao = new AppLockDao(this);
+
+		popwindow = new PopupWindow(new View(this), getWindowManager()
+				.getDefaultDisplay().getWidth(), getWindowManager()
+				.getDefaultDisplay().getHeight());
 
 		appLockedInfos = new ArrayList<AppInfo>();
 		appunLockInfos = new ArrayList<AppInfo>();
@@ -79,6 +91,17 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
+				if (removingFlag) {
+					System.out.println("removingFlag" + removingFlag);
+					return;
+				}
+				removingFlag = true;
+
+				popwindow.setBackgroundDrawable(new ColorDrawable(
+						Color.TRANSPARENT));
+				popwindow.showAtLocation(parent, Gravity.TOP | Gravity.LEFT, 0,
+						0);
+
 				AppInfo appInfo = (AppInfo) lv_unlock
 						.getItemAtPosition(position);
 				String packname = appInfo.getPackName();
@@ -91,7 +114,7 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 						Animation.RELATIVE_TO_SELF, 1.0f,
 						Animation.RELATIVE_TO_SELF, 0,
 						Animation.RELATIVE_TO_SELF, 0);
-				ta.setDuration(800);
+				ta.setDuration(500);
 				view.setAnimation(ta);
 
 				new DelayExecuter() {
@@ -100,8 +123,10 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 					public void onPostExecute() {
 						unlockAdapter.notifyDataSetChanged();
 						lockedAdapter.notifyDataSetChanged();
+						removingFlag = false;
+						popwindow.dismiss();
 					}
-				}.execute(800);
+				}.execute(500);
 			}
 		});
 
@@ -111,6 +136,17 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+
+				if (removingFlag) {
+					System.out.println("removingFlag" + removingFlag);
+					return;
+				}
+				removingFlag = true;
+
+				popwindow.setBackgroundDrawable(new ColorDrawable(
+						Color.TRANSPARENT));
+				popwindow.showAtLocation(parent, Gravity.TOP | Gravity.LEFT, 0,
+						0);
 
 				AppInfo appInfo = (AppInfo) lv_locked
 						.getItemAtPosition(position);
@@ -123,7 +159,7 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 						Animation.RELATIVE_TO_SELF, -1.0f,
 						Animation.RELATIVE_TO_SELF, 0,
 						Animation.RELATIVE_TO_SELF, 0);
-				ta.setDuration(800);
+				ta.setDuration(500);
 				view.setAnimation(ta);
 
 				new DelayExecuter() {
@@ -132,8 +168,10 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 					public void onPostExecute() {
 						unlockAdapter.notifyDataSetChanged();
 						lockedAdapter.notifyDataSetChanged();
+						removingFlag = false;
+						popwindow.dismiss();
 					}
-				}.execute(800);
+				}.execute(500);
 			}
 		});
 
