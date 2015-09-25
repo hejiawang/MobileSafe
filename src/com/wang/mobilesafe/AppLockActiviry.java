@@ -1,5 +1,6 @@
 package com.wang.mobilesafe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -7,6 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,8 +20,11 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.wang.mobilesafe.db.dao.AppLockDao;
 import com.wang.mobilesafe.domain.AppInfo;
 import com.wang.mobilesafe.engine.AppInfoProvider;
+import com.wang.mobilesafe.ui.MyToast;
+import com.wang.mobilesafe.utils.DelayExecuter;
 import com.wang.mobilesafe.utils.MyAsyncTask;
 
 public class AppLockActiviry extends Activity implements OnClickListener {
@@ -32,14 +40,24 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 	private TextView tv_locked_status;
 
 	private List<AppInfo> appInfos;
+	private List<AppInfo> appLockedInfos; // 存放已加锁程序信息
+	private List<AppInfo> appunLockInfos; // 存放未加锁程序信息
 
 	private AppInfoAdapter unlockAdapter;
+	private AppInfoAdapter lockedAdapter;
+
+	private AppLockDao dao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_applock);
+
+		dao = new AppLockDao(this);
+
+		appLockedInfos = new ArrayList<AppInfo>();
+		appunLockInfos = new ArrayList<AppInfo>();
 
 		tv_unlock = (TextView) findViewById(R.id.tv_unlock);
 		tv_locked = (TextView) findViewById(R.id.tv_locked);
@@ -54,6 +72,71 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 		tv_unlock.setOnClickListener(this);
 		tv_locked.setOnClickListener(this);
 
+		// 未加锁条目的点击事件
+		lv_unlock.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				AppInfo appInfo = (AppInfo) lv_unlock
+						.getItemAtPosition(position);
+				String packname = appInfo.getPackName();
+				dao.add(packname); // 添加锁定的程序包名到数据库
+				appLockedInfos.add(appInfo); // 添加被锁定的程序信息到内存集合
+				appunLockInfos.remove(appInfo); // 把被锁定的程序从未锁定的内存集合中移除
+
+				TranslateAnimation ta = new TranslateAnimation(
+						Animation.RELATIVE_TO_SELF, 0,
+						Animation.RELATIVE_TO_SELF, 1.0f,
+						Animation.RELATIVE_TO_SELF, 0,
+						Animation.RELATIVE_TO_SELF, 0);
+				ta.setDuration(800);
+				view.setAnimation(ta);
+
+				new DelayExecuter() {
+
+					@Override
+					public void onPostExecute() {
+						unlockAdapter.notifyDataSetChanged();
+						lockedAdapter.notifyDataSetChanged();
+					}
+				}.execute(800);
+			}
+		});
+
+		// 已加锁条目的点击事件
+		lv_locked.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				AppInfo appInfo = (AppInfo) lv_locked
+						.getItemAtPosition(position);
+				String packname = appInfo.getPackName();
+				dao.delete(packname);
+				appLockedInfos.remove(appInfo);
+				appunLockInfos.add(appInfo);
+				TranslateAnimation ta = new TranslateAnimation(
+						Animation.RELATIVE_TO_SELF, 0,
+						Animation.RELATIVE_TO_SELF, -1.0f,
+						Animation.RELATIVE_TO_SELF, 0,
+						Animation.RELATIVE_TO_SELF, 0);
+				ta.setDuration(800);
+				view.setAnimation(ta);
+
+				new DelayExecuter() {
+
+					@Override
+					public void onPostExecute() {
+						unlockAdapter.notifyDataSetChanged();
+						lockedAdapter.notifyDataSetChanged();
+					}
+				}.execute(800);
+			}
+		});
+
 		new MyAsyncTask() {
 
 			@Override
@@ -63,8 +146,12 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 
 			@Override
 			public void onPostExecute() {
-				unlockAdapter = new AppInfoAdapter(appInfos, true);
+				unlockAdapter = new AppInfoAdapter(appunLockInfos, true);
 				lv_unlock.setAdapter(unlockAdapter);
+
+				lockedAdapter = new AppInfoAdapter(appLockedInfos, false);
+				lv_locked.setAdapter(lockedAdapter);
+
 				pd_loading.setVisibility(View.INVISIBLE);
 			}
 
@@ -72,10 +159,15 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 			public void doInBackground() {
 
 				appInfos = AppInfoProvider.getAppInfos(getApplicationContext());
-
+				for (AppInfo appInfo : appInfos) {
+					if (dao.find(appInfo.getPackName())) {
+						appLockedInfos.add(appInfo);
+					} else {
+						appunLockInfos.add(appInfo);
+					}
+				}
 			}
 		}.execute();
-		;
 	}
 
 	@Override
@@ -110,8 +202,8 @@ public class AppLockActiviry extends Activity implements OnClickListener {
 
 		@Override
 		public int getCount() {
-			
-			if( unlockflag ){
+
+			if (unlockflag) {
 				tv_unlock_status.setText("未加锁软件(" + showAppInfos.size() + ")个");
 			} else {
 				tv_locked_status.setText("已加锁软件(" + showAppInfos.size() + ")个");
