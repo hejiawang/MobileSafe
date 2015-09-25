@@ -75,6 +75,11 @@ public class EnterPasswordActivity extends Activity {
 		String password = et_password.getText().toString().trim();
 		if ("123".equals(password)) {
 			finish();
+			//发出一个自定义广播，临时取消程序的保护，
+			Intent intent = new Intent();
+			intent.setAction("com.wang.stopprotect");
+			intent.putExtra("stoppackname", packname);
+			sendBroadcast(intent);
 		} else {
 			Toast.makeText(this, "密码不正确", 0).show();
 		}

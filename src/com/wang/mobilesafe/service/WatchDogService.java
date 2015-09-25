@@ -1,5 +1,6 @@
 package com.wang.mobilesafe.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.wang.mobilesafe.EnterPasswordActivity;
@@ -8,20 +9,27 @@ import com.wang.mobilesafe.db.dao.AppLockDao;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
 
 public class WatchDogService extends Service {
 
 	private static final String TAG = "WatchDogService";
+
 	private ActivityManager am;
 	private Intent intent;
 
 	private AppLockDao dao;
-
 	private boolean flag;
+	private List<String> tempStopProtectPacknames;
+
+	private InnerReceiver receiver;
+	private InnerLockScreenReceiver lockScreenReceiver;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -36,7 +44,18 @@ public class WatchDogService extends Service {
 		dao = new AppLockDao(this);
 		intent = new Intent(this, EnterPasswordActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		tempStopProtectPacknames = new ArrayList<String>();
 
+		receiver = new InnerReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction("com.wang.stopprotect");
+		registerReceiver(receiver, filter);
+
+		lockScreenReceiver = new InnerLockScreenReceiver();
+		IntentFilter lockScreenfilter = new IntentFilter();
+		lockScreenfilter.addAction(Intent.ACTION_SCREEN_OFF);
+		lockScreenfilter.setPriority(1000);
+		registerReceiver(lockScreenReceiver, lockScreenfilter);
 		// 开启看门狗，监视当前系统运行程序的信息
 		new Thread() {
 			public void run() {
@@ -52,8 +71,13 @@ public class WatchDogService extends Service {
 					Log.i(TAG, "packName : " + packName);
 					if (dao.find(packName)) {
 						// 如果打开的这个软件是受保护的...
-						intent.putExtra("packName", packName);
-						startActivity(intent);
+						// 判断当前包名是否要临时取消保护
+						if (tempStopProtectPacknames.contains(packName)) {
+							// 如果需要临时取消保护，什么也不做...
+						} else {
+							intent.putExtra("packName", packName);
+							startActivity(intent);
+						}
 					}
 
 					try {
@@ -71,5 +95,27 @@ public class WatchDogService extends Service {
 
 		super.onDestroy();
 		flag = false;
+		unregisterReceiver(receiver);
+		receiver = null;
+		unregisterReceiver(lockScreenReceiver);
+		lockScreenReceiver = null;
 	}
+
+	private class InnerReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String packname = intent.getStringExtra("stoppackname");
+			tempStopProtectPacknames.add(packname);
+		}
+	}
+
+	private class InnerLockScreenReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			tempStopProtectPacknames.clear();
+		}
+	}
+
 }
