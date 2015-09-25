@@ -5,14 +5,26 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="45dip"
-        android:background="#355E9E"
-        android:gravity="center"
-        android:text="程序锁"
-        android:textColor="#EBC950"
-        android:textSize="23dip" />
+        android:layout_height="45dip" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="45dip"
+            android:background="#355E9E"
+            android:gravity="center"
+            android:text="程序锁"
+            android:textColor="#EBC950"
+            android:textSize="23dip" />
+
+        <ProgressBar
+            android:id="@+id/pd_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:visibility="invisible" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -54,6 +66,7 @@
                 android:background="@drawable/listview_devider" />
 
             <TextView
+                android:id="@+id/tv_unlock_status"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/gray"
@@ -86,6 +99,7 @@
                 android:background="@drawable/listview_devider" />
 
             <TextView
+                android:id="@+id/tv_locked_status"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/gray"
