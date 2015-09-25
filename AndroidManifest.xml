@@ -43,6 +43,7 @@
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <application
         android:name="MobileSafeApplication"
@@ -118,6 +119,8 @@
         </activity>
         <activity android:name=".AppLockActiviry" >
         </activity>
+        <activity android:name=".EnterPasswordActivity" >
+        </activity>
 
         <service android:name=".service.ShowLocationService" >
         </service>
@@ -126,6 +129,8 @@
         <service android:name=".service.AutoKillService" >
         </service>
         <service android:name=".service.UpdateWidgetService" >
+        </service>
+        <service android:name=".service.WatchDogService" >
         </service>
 
         <receiver android:name=".receiver.OutCallReceiver" >
