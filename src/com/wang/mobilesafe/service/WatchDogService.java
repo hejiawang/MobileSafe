@@ -11,8 +11,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.wang.mobilesafe.EnterPasswordActivity;
 import com.wang.mobilesafe.db.dao.AppLockDao;
@@ -27,10 +30,14 @@ public class WatchDogService extends Service {
 	private AppLockDao dao;
 	private boolean flag;
 	private List<String> tempStopProtectPacknames;
+	private List<String> lockedPackNames;
+
+	private MyObserver observer;
 
 	// private InnerReceiver receiver;
 	private InnerLockScreenReceiver lockScreenReceiver;
-
+	private InnerUnLockScreenReceiver unLockScreenReceiver;
+	
 	@Override
 	public IBinder onBind(Intent intent) {
 
@@ -66,7 +73,7 @@ public class WatchDogService extends Service {
 		intent = new Intent(this, EnterPasswordActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		tempStopProtectPacknames = new ArrayList<String>();
-
+		lockedPackNames = dao.findAll();
 		// receiver = new InnerReceiver();
 		// IntentFilter filter = new IntentFilter();
 		// filter.addAction("com.wang.stopprotect");
@@ -77,7 +84,25 @@ public class WatchDogService extends Service {
 		lockScreenfilter.addAction(Intent.ACTION_SCREEN_OFF);
 		lockScreenfilter.setPriority(1000);
 		registerReceiver(lockScreenReceiver, lockScreenfilter);
+
+		unLockScreenReceiver = new InnerUnLockScreenReceiver();
+		IntentFilter unLockScreenfilter = new IntentFilter();
+		unLockScreenfilter.addAction(Intent.ACTION_SCREEN_ON);
+		unLockScreenfilter.setPriority(1000);
+		registerReceiver(unLockScreenReceiver, unLockScreenfilter);
+		
+		observer = new MyObserver(new Handler());
+		getContentResolver().registerContentObserver(AppLockDao.uri, true,
+				observer);
+
 		// 开启看门狗，监视当前系统运行程序的信息
+		startWatchDog();
+	}
+
+	/**
+	 * 看门狗，监视当前系统运行程序的信息
+	 */
+	private void startWatchDog() {
 		new Thread() {
 			public void run() {
 
@@ -89,7 +114,8 @@ public class WatchDogService extends Service {
 					RunningTaskInfo taskInfo = infos.get(0); // 最新打开的任务栈
 					ComponentName topActivity = taskInfo.topActivity; // 得到栈顶的activity
 					String packName = topActivity.getPackageName();
-					if (dao.find(packName)) {
+					// if (dao.find(packName)) {
+					if (lockedPackNames.contains(packName)) {
 						// 如果打开的这个软件是受保护的...
 						// 判断当前包名是否要临时取消保护
 						if (tempStopProtectPacknames.contains(packName)) {
@@ -101,7 +127,7 @@ public class WatchDogService extends Service {
 					}
 
 					try {
-						Thread.sleep(300);
+						Thread.sleep(100);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -119,6 +145,10 @@ public class WatchDogService extends Service {
 		// receiver = null;
 		unregisterReceiver(lockScreenReceiver);
 		lockScreenReceiver = null;
+		unregisterReceiver(unLockScreenReceiver);
+		unLockScreenReceiver = null;
+		getContentResolver().unregisterContentObserver(observer);
+		observer = null;
 	}
 
 	// private class InnerReceiver extends BroadcastReceiver {
@@ -135,7 +165,32 @@ public class WatchDogService extends Service {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			tempStopProtectPacknames.clear();
+			flag = false;
 		}
 	}
 
+	private class InnerUnLockScreenReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if( !flag ){
+				startWatchDog();
+			}
+		}
+	}
+
+	private class MyObserver extends ContentObserver {
+
+		public MyObserver(Handler handler) {
+			super(handler);
+		}
+
+		@Override
+		public void onChange(boolean selfChange) {
+
+			super.onChange(selfChange);
+			Log.i(TAG, "观察到数据变化了.....");
+			lockedPackNames = dao.findAll();
+		}
+	}
 }

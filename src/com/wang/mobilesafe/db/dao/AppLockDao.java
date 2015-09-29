@@ -1,17 +1,24 @@
 package com.wang.mobilesafe.db.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 import com.wang.mobilesafe.db.AppLockDBOpenHelper;
 
 public class AppLockDao {
 
 	private AppLockDBOpenHelper helper;
-
+	private Context context;
+	public static Uri uri = Uri.parse("content://com.wang.applocked");//自定义的消息邮箱地址
+	
 	public AppLockDao(Context context) {
 		helper = new AppLockDBOpenHelper(context);
+		this.context = context;
 	}
 
 	/**
@@ -38,6 +45,26 @@ public class AppLockDao {
 	}
 
 	/**
+	 * 查询所有已锁定程序的包名
+	 * 
+	 * @return 已锁定程序包名的集合
+	 */
+	public List<String> findAll() {
+
+		List<String> packnames = new ArrayList<String>();
+		SQLiteDatabase db = helper.getReadableDatabase();
+		Cursor cursor = db.rawQuery("select packname from applock", null);
+		while (cursor.moveToNext()) {
+
+			String packname = cursor.getString(0);
+			packnames.add(packname);
+		}
+		cursor.close();
+		db.close();
+		return packnames;
+	}
+
+	/**
 	 * 添加锁定包名
 	 * 
 	 * @param packname
@@ -48,9 +75,9 @@ public class AppLockDao {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		db.execSQL("insert into applock ( packname ) values( ? )",
 				new Object[] { packname });
+		context.getContentResolver().notifyChange(uri, null);
 		db.close();
 	}
-
 
 	/**
 	 * 删除锁定包名
@@ -69,6 +96,7 @@ public class AppLockDao {
 		if (result == 0) {
 			return false;
 		} else {
+			context.getContentResolver().notifyChange(uri, null);
 			return true;
 		}
 	}
