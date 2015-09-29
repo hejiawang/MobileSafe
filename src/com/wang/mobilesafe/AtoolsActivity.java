@@ -176,4 +176,13 @@ public class AtoolsActivity extends Activity {
 	public void appLock(View view) {
 		ActivityUtil.startActivity(this, AppLockActiviry.class);
 	}
+
+	/**
+	 * SlidingDrawer测试
+	 * 
+	 * @param view
+	 */
+	public void slidingTest(View view) {
+		ActivityUtil.startActivity(this, Test_Sliding_Drawer.class);
+	}
 }

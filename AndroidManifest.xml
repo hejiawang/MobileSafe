@@ -126,6 +126,8 @@
         </activity>
         <activity android:name=".TrafficManagerActivity" >
         </activity>
+        <activity android:name=".Test_Sliding_Drawer" >
+        </activity>
 
         <service android:name=".service.ShowLocationService" >
         </service>

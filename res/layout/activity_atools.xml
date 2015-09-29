@@ -165,5 +165,30 @@
         android:layout_height="1dip"
         android:layout_alignParentBottom="true"
         android:background="@drawable/listview_devider" />
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/home_selector"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:onClick="slidingTest"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            style="@style/text_content_style"
+            android:text="SlidingDrawer测试" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dip"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/listview_devider" />
 
 </LinearLayout>
