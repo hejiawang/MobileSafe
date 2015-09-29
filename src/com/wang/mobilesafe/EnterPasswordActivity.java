@@ -1,12 +1,15 @@
 package com.wang.mobilesafe;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,6 +17,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.wang.mobilesafe.service.IService;
+import com.wang.mobilesafe.service.WatchDogService;
 
 public class EnterPasswordActivity extends Activity {
 
@@ -23,6 +29,9 @@ public class EnterPasswordActivity extends Activity {
 	private EditText et_password;
 
 	private String packname;
+
+	private IService iService;
+	private MyConn conn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +55,24 @@ public class EnterPasswordActivity extends Activity {
 			iv_icon.setImageDrawable(icon);
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
+		}
+
+		Intent service = new Intent(this, WatchDogService.class);
+		conn = new MyConn();
+		bindService(service, conn, BIND_AUTO_CREATE);
+	}
+
+	private class MyConn implements ServiceConnection {
+
+		@Override
+		public void onServiceConnected(ComponentName name, IBinder service) {
+
+			iService = (IService) service;
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+
 		}
 	}
 
@@ -79,12 +106,22 @@ public class EnterPasswordActivity extends Activity {
 		if ("123".equals(password)) {
 			finish();
 			// 发出一个自定义广播，临时取消程序的保护，
-			Intent intent = new Intent();
-			intent.setAction("com.wang.stopprotect");
-			intent.putExtra("stoppackname", packname);
-			sendBroadcast(intent);
+			// Intent intent = new Intent();
+			// intent.setAction("com.wang.stopprotect");
+			// intent.putExtra("stoppackname", packname);
+			// sendBroadcast(intent);
+			
+			//调用服务内的方法
+			iService.callMethodInService(packname);
 		} else {
 			Toast.makeText(this, "密码不正确", 0).show();
 		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		
+		unbindService(conn);
+		super.onDestroy();
 	}
 }
