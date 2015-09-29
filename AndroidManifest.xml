@@ -124,6 +124,8 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance" >
         </activity>
+        <activity android:name=".TrafficManagerActivity" >
+        </activity>
 
         <service android:name=".service.ShowLocationService" >
         </service>
