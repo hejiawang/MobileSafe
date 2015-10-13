@@ -128,6 +128,14 @@
         </activity>
         <activity android:name=".Test_Sliding_Drawer" >
         </activity>
+        <activity android:name=".SystemOptActivity" >
+        </activity>
+        <activity android:name=".CleanCacheActivity" >
+        </activity>
+        <activity android:name=".CleanSDActivity" >
+        </activity>
+        <activity android:name=".CleanStartupActivity" >
+        </activity>
 
         <service android:name=".service.ShowLocationService" >
         </service>
