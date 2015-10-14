@@ -23,7 +23,7 @@ public class CleanSDActivity extends Activity {
 		TextView tv = new TextView(this);
 		tv.setTextSize(30);
 		tv.setTextColor(Color.RED);
-		tv.setText("SD卡清理");
+		tv.setText("SD卡清理——逻辑实现");
 		setContentView(tv);
 
 		File file = Environment.getExternalStorageDirectory();
