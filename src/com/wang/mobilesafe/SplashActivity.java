@@ -126,6 +126,8 @@ public class SplashActivity extends Activity {
 		copyAddressDB();
 		// 2. 查询常用号码的数据库文件
 		copyCommonNumDB();
+		// 3.病毒数据库
+		copyVirusDB();
 	}
 
 	/**
@@ -185,6 +187,45 @@ public class SplashActivity extends Activity {
 					try {
 
 						InputStream is = getAssets().open("commonnum.db");
+						File f = CopyFileUtil.copyFile(is,
+								file.getAbsolutePath());
+						if (f != null) {
+							// ...
+						} else {
+
+							msg.what = COPY_ERROR;
+						}
+					} catch (IOException e) {
+
+						e.printStackTrace();
+						msg.what = COPY_ERROR;
+					} finally {
+
+						handler.sendMessage(msg);
+					}
+				};
+			}.start();
+		}
+	}
+
+	/**
+	 * 释放病毒数据库文件到系统目录
+	 */
+	private void copyVirusDB() {
+
+		final File file = new File(getFilesDir(), "antivirus.db");
+		if (file.exists() && file.length() > 0) {
+			// ...
+		} else {
+
+			new Thread() {
+
+				public void run() {
+
+					Message msg = Message.obtain();
+					try {
+
+						InputStream is = getAssets().open("antivirus.db");
 						File f = CopyFileUtil.copyFile(is,
 								file.getAbsolutePath());
 						if (f != null) {
