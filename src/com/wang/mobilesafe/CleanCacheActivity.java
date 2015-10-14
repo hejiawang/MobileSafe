@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.IPackageDataObserver;
 import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -13,9 +14,11 @@ import android.content.pm.PackageStats;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -118,6 +121,17 @@ public class CleanCacheActivity extends Activity {
 		pb = (ProgressBar) findViewById(R.id.progressBar1);
 
 		pm = getPackageManager();
+		fillData();
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		ll_container.removeAllViews();
+		fillData();
+	}
+
+	private void fillData() {
 		new Thread() {
 			public void run() {
 
@@ -192,5 +206,38 @@ public class CleanCacheActivity extends Activity {
 		long codesize;
 		long cachesize;
 		String packname;
+	}
+
+	/**
+	 * 一键清理的单击事件
+	 * 
+	 * @param view
+	 */
+	public void cleanCache(View view) {
+		
+		try {
+			Method method = PackageManager.class.getMethod("deleteApplicationCacheFiles",
+					new Class[] { String.class
+				,IPackageDataObserver.class
+			});
+			
+			method.invoke(pm, new Object[]{"xxx",new CleanCahceObserver()});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private class CleanCahceObserver implements IPackageDataObserver{
+
+		@Override
+		public IBinder asBinder() {
+			return null;
+		}
+
+		@Override
+		public void onRemoveCompleted(String packageName, boolean succeeded)
+				throws RemoteException {
+			System.out.println("==="+succeeded);
+		}
 	}
 }
