@@ -16,7 +16,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,9 @@ public class HomeActivity extends Activity implements OnClickListener {
 	private Button bt_normal_entry_cancle;
 	private Button bt_normal_entry_ok;
 	
+	private ImageView closeYoumi;
+	private LinearLayout adLayout;
+	private RelativeLayout guanggao;
 	private AlertDialog dialog ;
 	
 	@Override
@@ -112,9 +117,20 @@ public class HomeActivity extends Activity implements OnClickListener {
 		// 实例化广告条
 		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
 		// 获取要嵌入广告条的布局
-		LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
+		adLayout=(LinearLayout)findViewById(R.id.adLayout);
 		// 将广告条加入到布局中
 		adLayout.addView(adView);
+		
+		closeYoumi = (ImageView) findViewById(R.id.closeYoumi);
+		guanggao = (RelativeLayout) findViewById(R.id.guanggao);
+		closeYoumi.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				System.out.println("关闭广告");
+				guanggao.removeAllViews();
+			}
+		});
 	}
 
 	/**

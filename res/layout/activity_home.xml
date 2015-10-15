@@ -21,13 +21,30 @@
         android:singleLine="true"
         android:text="我是手机的安全卫士...我能时刻的保护您移动设备的信息安全..." />
 
-    <LinearLayout
-        android:id="@+id/adLayout"
+    <RelativeLayout
+        android:id="@+id/guanggao"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/adLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/closeYoumi"
+            android:layout_width="50dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_weight="100"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/close" />
+    </RelativeLayout>
 
     <GridView
         android:id="@+id/gv_home"
