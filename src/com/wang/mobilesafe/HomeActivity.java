@@ -1,18 +1,14 @@
 package com.wang.mobilesafe;
 
-import com.wang.mobilesafe.adapter.HomeAdapter;
-import com.wang.mobilesafe.utils.MD5Util;
-
-import android.R.bool;
+import net.youmi.android.banner.AdSize;
+import net.youmi.android.banner.AdView;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.sax.TextElementListener;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,8 +16,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.wang.mobilesafe.adapter.HomeAdapter;
+import com.wang.mobilesafe.utils.MD5Util;
 
 /**
  * 实现了OnClickListener接口，来响应单机事件的代码写法
@@ -107,6 +107,14 @@ public class HomeActivity extends Activity implements OnClickListener {
 			
 		});
 		
+		
+		//有米广告
+		// 实例化广告条
+		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
+		// 获取要嵌入广告条的布局
+		LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
+		// 将广告条加入到布局中
+		adLayout.addView(adView);
 	}
 
 	/**

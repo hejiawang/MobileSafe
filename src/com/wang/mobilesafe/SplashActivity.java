@@ -7,15 +7,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.wang.mobilesafe.domain.UpdateInfo;
-import com.wang.mobilesafe.engine.UpdateInfoParser;
-import com.wang.mobilesafe.utils.CopyFileUtil;
-import com.wang.mobilesafe.utils.DownLoadUtil;
-
+import net.youmi.android.AdManager;
+import net.youmi.android.spot.SpotManager;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -23,7 +20,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,6 +28,11 @@ import android.os.Message;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.wang.mobilesafe.domain.UpdateInfo;
+import com.wang.mobilesafe.engine.UpdateInfoParser;
+import com.wang.mobilesafe.utils.CopyFileUtil;
+import com.wang.mobilesafe.utils.DownLoadUtil;
 
 public class SplashActivity extends Activity {
 
@@ -110,6 +111,14 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 
+		// 嵌入有米广告
+		AdManager.getInstance(this).init("16777f67f240eee0",
+				"758d9fe4d3d8ca4d", true);
+		SpotManager.getInstance(this).loadSpotAds();
+		SpotManager.getInstance(this).setSpotOrientation(SpotManager.ORIENTATION_LANDSCAPE);
+		SpotManager.getInstance(this).setAnimationType(SpotManager.ANIM_ADVANCE);
+		SpotManager.getInstance(this).showSpotAds(this);
+		
 		tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
 		tv_splash_version.setText("版本：" + this.getAppVersion());
 

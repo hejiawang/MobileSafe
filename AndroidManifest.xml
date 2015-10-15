@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="21" />
+        android:targetSdkVersion="14" />
 
     <!-- 访问网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -45,6 +45,8 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:name="MobileSafeApplication"
@@ -137,8 +139,9 @@
         </activity>
         <activity android:name=".CleanStartupActivity" >
         </activity>
-        <activity android:name=".AntivirusActivity" 
-            android:configChanges="orientation|keyboardHidden">
+        <activity
+            android:name=".AntivirusActivity"
+            android:configChanges="orientation|keyboardHidden" >
         </activity>
 
         <service android:name=".service.ShowLocationService" >
@@ -192,6 +195,25 @@
         <receiver android:name=".receiver.MyKillProcessReceiver" >
             <intent-filter>
                 <action android:name="com.wang.killbgprocess" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="net.youmi.android.AdBrowser"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+
+        <service
+            android:name="net.youmi.android.AdService"
+            android:exported="false" >
+        </service>
+
+        <receiver android:name="net.youmi.android.AdReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
     </application>
