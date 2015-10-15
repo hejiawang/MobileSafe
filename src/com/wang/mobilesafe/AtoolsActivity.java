@@ -185,4 +185,15 @@ public class AtoolsActivity extends Activity {
 	public void slidingTest(View view) {
 		ActivityUtil.startActivity(this, Test_Sliding_Drawer.class);
 	}
+
+	String errString;
+
+	/**
+	 * 程序全局异常退出的测试
+	 * 
+	 * @param view
+	 */
+	public void errTest(View view) {
+		errString.equals("errString");// errString未初始化,会有异常.
+	}
 }
