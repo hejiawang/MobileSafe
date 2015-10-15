@@ -23,13 +23,15 @@ public class MyUncaughtExceptionHandler implements UncaughtExceptionHandler {
 	public void uncaughtException(Thread thread, Throwable ex) {
 		try {
 			StringBuffer sb = new StringBuffer();
-
+			
+			//异常发生时间
 			long time = System.currentTimeMillis();
 			Date date = new Date(time);
 			String timeStr = date.toGMTString();
 			sb.append(timeStr);
 			sb.append("\n");
 
+			//用户使用的手机型号等信息
 			Field[] fields = Build.class.getDeclaredFields();
 			for (Field field : fields) {
 				String name = field.getName();
@@ -38,6 +40,7 @@ public class MyUncaughtExceptionHandler implements UncaughtExceptionHandler {
 				sb.append("\n");
 			}
 
+			//发生异常的具体情况
 			StringWriter sw = new StringWriter();
 			PrintWriter write = new PrintWriter(sw);
 			ex.printStackTrace(write);
