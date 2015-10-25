@@ -1,3 +1,3 @@
-´î½¨ÊÖ»úÎÀÊ¿µÄ·şÎñÆ÷£ºÌá¹©ĞÂ°æ±¾°²×°µÄ¹¦ÄÜ
-	½«update.xml·Åµ½E:\Java\JavaTool\Tomcat\apache-tomcat-8.0.24\webapps\ROOT   
-	Æô¶¯tomcat
+æ­å»ºæ‰‹æœºå«å£«çš„æœåŠ¡å™¨ï¼šæä¾›æ–°ç‰ˆæœ¬å®‰è£…çš„åŠŸèƒ½
+	å°†update.xmlæ”¾åˆ°E:\Java\JavaTool\Tomcat\apache-tomcat-8.0.24\webapps\ROOT   
+	å¯åŠ¨tomcat
