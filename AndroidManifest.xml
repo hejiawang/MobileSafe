@@ -28,12 +28,6 @@
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <!-- 震动权限 -->
     <uses-permission android:name="android.permission.VIBRATE" />
-
-    <!-- 拖拽桌面上的控件的权限 -->
-    <instrumentation
-        android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="com.wang.mobilesafe" />
-
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 挂断电话的权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -48,6 +42,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="com.wang.mobilesafe" />
+    
     <application
         android:name="MobileSafeApplication"
         android:allowBackup="true"
